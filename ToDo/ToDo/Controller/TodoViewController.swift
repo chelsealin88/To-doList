@@ -68,7 +68,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     // Save Core Data
-    func save(enter: String) { }
+    func save(enter: String) {
+        coredata.saveData(enter: enter)
+    }
     
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
