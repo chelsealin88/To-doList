@@ -9,14 +9,14 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addTodoButton: UIButton!
     @IBOutlet weak var addtextField: UITextField!
     
-    var havetext = Bool()
+//    var havetext = Bool()
     var list : [NSManagedObject] = [] {
         didSet {
             list.forEach { (obj) in
@@ -88,6 +88,15 @@ class ViewController: UIViewController {
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
         let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
         listObject.setValue(enter, forKey: "enter")
+        listObject.setValue(false, forKey: "done")
+        
+        // update all data
+        for index in list {
+            if index.value(forKeyPath: "done") as? Bool == nil {
+                index.setValue(false, forKey: "done")
+            }
+        }
+        
         
         do {
             try managedContext.save()
@@ -97,6 +106,8 @@ class ViewController: UIViewController {
         }
         
     }
+    
+//    func done()
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -111,14 +122,14 @@ class ViewController: UIViewController {
     
     
     func setButton() {
-
+        
         addTodoButton.layer.cornerRadius = addTodoButton.frame.size.width / 2
         addTodoButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         addTodoButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         addTodoButton.layer.shadowOpacity = 1.0
         addTodoButton.layer.shadowRadius = 0.0
         addTodoButton.layer.masksToBounds = false
-        
+
     }
     
     
@@ -138,17 +149,15 @@ extension ViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let lists = list[indexPath.row]
         cell.textLabel?.text = lists.value(forKeyPath: "enter") as? String
-        
-    
+        let done = lists.value(forKeyPath: "done") as! Bool
+        if done {
+            cell.textLabel?.attributedText = strikeThroughText((lists.value(forKeyPath: "enter") as? String)!)
+        }
         
         
         return cell
         
-        
-        
     }
-    
-    
 }
 
 
@@ -160,8 +169,17 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
             
-            print("click!!!!!!!")
-            
+            let lists = self.list[indexPath.row]
+            let index = tableView.cellForRow(at: indexPath)
+            let strikeString = self.list[indexPath.row].value(forKey: "enter") as? String
+            index?.textLabel?.attributedText = self.strikeThroughText(strikeString!)
+            guard let currentBool = lists.value(forKey: "done") as? Bool else { return }
+            lists.setValue(!currentBool, forKey: "done")
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            //  save or retrieve anything from your Core Data store
+            try! appDelegate.persistentContainer.viewContext.save()
             completion(true)
             
         }
