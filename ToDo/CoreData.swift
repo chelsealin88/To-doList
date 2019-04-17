@@ -23,7 +23,7 @@ class CoreData {
         return appDelegate.persistentContainer.viewContext
     }
     
-    func saveData(enter: String) {
+    func saveData(title: String) {
         
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
         let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
@@ -80,6 +80,8 @@ extension NSManagedObject {
         try! managedObjectContext?.save()
     }
 }
+
+
 struct Atodo {
     
     var title: String

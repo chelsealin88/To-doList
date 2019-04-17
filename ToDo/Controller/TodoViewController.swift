@@ -31,6 +31,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         setButton()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
         addtextField.clipsToBounds = true
+        coredata.list.forEach{
+            $0.renameAttribute(before: "enter", after: "title")
+        }
         
     }
     
@@ -49,7 +52,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         guard let todotext = addtextField.text, !todotext.isEmpty else {
             return
         }
-        self.save(enter: todotext)
+        self.save(title: todotext)
         self.tableView.reloadData()
         addtextField.text = ""
     
