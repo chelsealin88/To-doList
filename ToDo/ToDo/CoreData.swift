@@ -27,7 +27,7 @@ class CoreData {
         
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
         let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
-        listObject.setValue(enter, forKey: "enter")
+        listObject.setValue(enter, forKey: "title")
         listObject.setValue(false, forKey: "done")
         
         // update all data
@@ -66,10 +66,18 @@ class CoreData {
 extension NSManagedObject {
     var atodo: Atodo {
         
-        let title: String = value(forKey: "enter") as! String 
+        let title: String = value(forKey: "title") as! String
+//        print(value(forKey: "enter") as? String)
         let done: Bool = value(forKey: "done") as! Bool
         
         return Atodo.init(title: title, done: done)
+    }
+    func renameAttribute(before: String, after: String) {
+        
+//        let previousValue = value(forKey: before)
+//        setValue(previousValue, forKey: after)
+//        setValue(nil, forKey: before)
+        try! managedObjectContext?.save()
     }
 }
 struct Atodo {

@@ -39,9 +39,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         getData()
         
+//        coredata.list.forEach {
+//            $0.renameAttribute(before: "enter", after: "title")
+//        }
     }
-    
-    
     
     @IBAction func addTodoButton(_ sender: Any) {
         
@@ -54,18 +55,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     }
     
-    
-    
-    
     // Get Cora Data
     func getData() {
         coredata.getData {
         ///todo gcd
              tableView.reloadData()
         }
-       
     }
-    
     
     // Save Core Data
     func save(enter: String) {
@@ -179,7 +175,6 @@ extension ViewController: UITableViewDelegate {
         
     }
 }
-
 
 extension UIButton {
     
