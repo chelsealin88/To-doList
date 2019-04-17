@@ -31,6 +31,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         setButton()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
         addtextField.clipsToBounds = true
+        coredata.list.forEach{
+            $0.renameAttribute(before: "enter", after: "title")
+        }
         
     }
     
@@ -38,7 +41,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getData()
-        
     }
     
     
@@ -48,7 +50,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         guard let todotext = addtextField.text, !todotext.isEmpty else {
             return
         }
-        self.save(enter: todotext)
+        self.save(title: todotext)
         self.tableView.reloadData()
         addtextField.text = ""
     
@@ -68,7 +70,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     // Save Core Data
-    func save(enter: String) { }
+    func save(title: String) { }
     
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
