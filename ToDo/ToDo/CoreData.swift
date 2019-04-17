@@ -14,13 +14,17 @@ import UIKit.UIApplication
 class CoreData {
     
     var list : [NSManagedObject] = []
+    
+    
     var appDelegate: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
+    }
+    var managedContext: NSManagedObjectContext {
+        return appDelegate.persistentContainer.viewContext
     }
     
     func saveData(enter: String) {
         
-        let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
         let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
         listObject.setValue(enter, forKey: "enter")
@@ -41,5 +45,36 @@ class CoreData {
         }
         
     }
+    
+    typealias Completion = () -> Void
+    
+    func getData(completion: Completion) {
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
+        
+        do {
+            list = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        completion()
+        
+    }
+}
+
+extension NSManagedObject {
+    var atodo: Atodo {
+        
+        let title: String = value(forKey: "enter") as! String
+        let done: Bool = value(forKey: "done") as! Bool
+        
+        return Atodo.init(title: title, done: done)
+    }
+}
+struct Atodo {
+    
+    var title: String
+    var done: Bool
     
 }

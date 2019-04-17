@@ -17,13 +17,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addtextField: UITextField!
     
     var coredata = CoreData()
-    var list : [NSManagedObject] = [] {
-        didSet {
-            list.forEach { (obj) in
-                print(obj)
-            }
-        }
+//    var list : [NSManagedObject] = [] {
+//        didSet {
+//            list.forEach { (obj) in
+//                print(obj)
+//            }
+//        }
+//    }
+//    var list : []
+    var list : [Atodo] {
+        ///todo: lazy
+        return coredata.list.map{$0.atodo}
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,48 +67,52 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     // Get Cora Data
     func getData() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
+//
+//        do {
+//            list = try managedContext.fetch(fetchRequest)
+//        } catch let error as NSError {
+//            print("Could not fetch \(error), \(error.userInfo)")
+//        }
+        coredata.getData {
+        ///todo gcd
+             tableView.reloadData()
         }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
-        
-        do {
-            list = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
-        tableView.reloadData()
+       
     }
     
     
     // Save Core Data
     func save(enter: String) {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        //  save or retrieve anything from your Core Data store
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
-        let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
-        listObject.setValue(enter, forKey: "enter")
-        listObject.setValue(false, forKey: "done")
-        
-        // update all data
-        for index in list {
-            if index.value(forKeyPath: "done") as? Bool == nil {
-                index.setValue(false, forKey: "done")
-            }
-        }
-        
-        
-        do {
-            try managedContext.save()
-            list.append(listObject)
-        } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
-        }
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        //  save or retrieve anything from your Core Data store
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
+//        let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
+//        listObject.setValue(enter, forKey: "enter")
+//        listObject.setValue(false, forKey: "done")
+//
+//        // update all data
+//        for index in list {
+//            if index.value(forKeyPath: "done") as? Bool == nil {
+//                index.setValue(false, forKey: "done")
+//            }
+//        }
+//
+//
+//        do {
+//            try managedContext.save()
+//            list.append(listObject)
+//        } catch let error as NSError {
+//            print("Could not save \(error), \(error.userInfo)")
+//        }
         
     }
     
@@ -143,11 +153,11 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let lists = list[indexPath.row]
-        cell.textLabel?.text = lists.value(forKeyPath: "enter") as? String
-        let done = lists.value(forKeyPath: "done") as! Bool
-        if done {
-            cell.textLabel?.attributedText = strikeThroughText((lists.value(forKeyPath: "enter") as? String)!)
+        let aTodo = list[indexPath.row]
+        cell.textLabel?.text = aTodo.title
+        
+        if aTodo.done {
+            cell.textLabel?.attributedText =  strikeThroughText(aTodo.title)
         }
         
         
@@ -165,12 +175,13 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
             
-            let lists = self.list[indexPath.row]
-            let index = tableView.cellForRow(at: indexPath)
-            let strikeString = self.list[indexPath.row].value(forKey: "enter") as? String
-            index?.textLabel?.attributedText = self.strikeThroughText(strikeString!)
-            guard let currentBool = lists.value(forKey: "done") as? Bool else { return }
-            lists.setValue(!currentBool, forKey: "done")
+            let aTodo = self.list[indexPath.row]
+            let cell = tableView.cellForRow(at: indexPath)
+            let title = aTodo.title
+            cell?.textLabel?.attributedText = self.strikeThroughText(title)
+            let currentBool = aTodo.done
+            aTodo.setValue(!currentBool, forKey: "done")
+            
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
