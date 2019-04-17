@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+//import CoreData
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addTodoButton: UIButton!
     @IBOutlet weak var addtextField: UITextField!
     
-//    var havetext = Bool()
+    var coredata = CoreData()
     var list : [NSManagedObject] = [] {
         didSet {
             list.forEach { (obj) in
@@ -46,7 +46,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func addTodoButton(_ sender: Any) {
-        
         
         guard let todotext = addtextField.text, !todotext.isEmpty else {
             return
@@ -107,7 +106,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-//    func done()
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -132,9 +130,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     }
     
-    
 }
-
 
 
 
