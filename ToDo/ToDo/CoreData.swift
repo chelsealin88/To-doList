@@ -66,7 +66,7 @@ class CoreData {
 extension NSManagedObject {
     var atodo: Atodo {
         
-        let title: String = value(forKey: "enter") as! String
+        let title: String = value(forKey: "enter") as? String ?? "default"
         let done: Bool = value(forKey: "done") as! Bool
         
         return Atodo.init(title: title, done: done)
