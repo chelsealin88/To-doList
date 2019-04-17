@@ -17,14 +17,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addtextField: UITextField!
     
     var coredata = CoreData()
-//    var list : [NSManagedObject] = [] {
-//        didSet {
-//            list.forEach { (obj) in
-//                print(obj)
-//            }
-//        }
-//    }
-//    var list : []
     var list : [Atodo] {
         ///todo: lazy
         return coredata.list.map{$0.atodo}
@@ -67,17 +59,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     // Get Cora Data
     func getData() {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
-//
-//        do {
-//            list = try managedContext.fetch(fetchRequest)
-//        } catch let error as NSError {
-//            print("Could not fetch \(error), \(error.userInfo)")
-//        }
         coredata.getData {
         ///todo gcd
              tableView.reloadData()
@@ -87,34 +68,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     // Save Core Data
-    func save(enter: String) {
-        
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        //  save or retrieve anything from your Core Data store
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
-//        let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
-//        listObject.setValue(enter, forKey: "enter")
-//        listObject.setValue(false, forKey: "done")
-//
-//        // update all data
-//        for index in list {
-//            if index.value(forKeyPath: "done") as? Bool == nil {
-//                index.setValue(false, forKey: "done")
-//            }
-//        }
-//
-//
-//        do {
-//            try managedContext.save()
-//            list.append(listObject)
-//        } catch let error as NSError {
-//            print("Could not save \(error), \(error.userInfo)")
-//        }
-        
-    }
+    func save(enter: String) { }
     
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -180,7 +134,7 @@ extension ViewController: UITableViewDelegate {
             let title = aTodo.title
             cell?.textLabel?.attributedText = self.strikeThroughText(title)
             let currentBool = aTodo.done
-            aTodo.setValue(!currentBool, forKey: "done")
+            self.coredata.list[indexPath.row].setValue(!currentBool, forKey: "done")
             
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -205,7 +159,7 @@ extension ViewController: UITableViewDelegate {
                 return
             }
             let managedContext = appDelegate.persistentContainer.viewContext
-            managedContext.delete(self.list[indexPath.row])
+            self.coredata.managedContext.delete(self.coredata.list[indexPath.row])
             
             do {
                 try managedContext.save()
