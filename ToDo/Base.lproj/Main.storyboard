@@ -88,6 +88,7 @@
                     <connections>
                         <outlet property="addTodoButton" destination="Zax-aN-G83" id="v24-wI-UPJ"/>
                         <outlet property="addtextField" destination="gJh-jI-a6U" id="bqk-1j-I6B"/>
+                        <outlet property="buttomlayout" destination="nGu-hS-OBZ" id="0KS-aA-eS0"/>
                         <outlet property="tableView" destination="jb0-XP-bss" id="lZ8-DE-u3B"/>
                     </connections>
                 </viewController>

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import CoreData
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
@@ -15,8 +14,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addTodoButton: UIButton!
     @IBOutlet weak var addtextField: UITextField!
+    @IBOutlet weak var buttomlayout: NSLayoutConstraint!
     
+    let center : NotificationCenter = NotificationCenter.default
     var coredata = CoreData()
+    var status = true
     var list : [Atodo] {
         ///todo: lazy
         return coredata.list.map{$0.atodo}
@@ -31,21 +33,38 @@ class ViewController: UIViewController, UITextFieldDelegate {
         setButton()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
         addtextField.clipsToBounds = true
+        //change attribute name
         coredata.list.forEach{
             $0.renameAttribute(before: "enter", after: "title")
         }
         
+        //Listion to keyboard
+        
+        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        
+        addtextField.delegate = self
     }
+    
+    // Stop to listen keyboard notification
+    deinit {
+        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+    }
+    
     
     // get data from your persistent store
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         getData()
         
-//        coredata.list.forEach {
-//            $0.renameAttribute(before: "enter", after: "title")
-//        }
     }
+    
     
     @IBAction func addTodoButton(_ sender: Any) {
         
@@ -55,20 +74,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
         self.save(title: todotext)
         self.tableView.reloadData()
         addtextField.text = ""
-    
+        
     }
     
     // Get Cora Data
     func getData() {
         coredata.getData {
-        ///todo gcd
-             tableView.reloadData()
+            ///todo gcd
+            tableView.reloadData()
         }
     }
     
     // Save Core Data
-    func save(enter: String) {
-        coredata.saveData(enter: enter)
+    func save(title: String) {
+        coredata.saveData(title: title)
     }
     
     
@@ -85,18 +104,34 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     func setButton() {
-        
         addTodoButton.layer.cornerRadius = addTodoButton.frame.size.width / 2
         addTodoButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         addTodoButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         addTodoButton.layer.shadowOpacity = 1.0
         addTodoButton.layer.shadowRadius = 0.0
         addTodoButton.layer.masksToBounds = false
-
+    }
+    var b = true
+    var savekeyboardHeigh: CGFloat!
+    //keyboard
+    @objc func keyboardWillChange(noti: Notification) {
+        print("keyboard will change \(noti.name.rawValue)")
+        view.frame.origin.y = -300
+        
+    }
+    
+    @objc func keyboardWillHide(noti: Notification) {
+        
+        self.view.frame.origin.y = 0
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 }
-
 
 
 // MARK: TableView DataSource
@@ -114,7 +149,6 @@ extension ViewController: UITableViewDataSource {
         if aTodo.done {
             cell.textLabel?.attributedText =  strikeThroughText(aTodo.title)
         }
-        
         
         return cell
         
@@ -137,11 +171,8 @@ extension ViewController: UITableViewDelegate {
             let currentBool = aTodo.done
             self.coredata.list[indexPath.row].setValue(!currentBool, forKey: "done")
             
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
-            }
-            //  save or retrieve anything from your Core Data store
-            try! appDelegate.persistentContainer.viewContext.save()
+            try! self.coredata.appDelegate.persistentContainer.viewContext.save()
+            
             completion(true)
             
         }
@@ -150,40 +181,39 @@ extension ViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [action])
     }
     
-    
-    
     // Delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
             
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
+            if self.status == true {
+                
+                let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
+                let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
+                let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
+                    
+                    let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
+                    self.coredata.managedContext.delete(self.coredata.list[indexPath.row])
+                    
+                    do {
+                        try managedContext.save()
+                        self.getData()
+                    } catch let error as NSError {
+                        print("Could not delete \(error), \(error.userInfo)")
+                    }
+                    completion(true)
+                }
+                alert.addAction(cancleAction)
+                alert.addAction(deletetAction)
+                self.present(alert, animated: true, completion: nil)
+                
             }
-            let managedContext = appDelegate.persistentContainer.viewContext
-            self.coredata.managedContext.delete(self.coredata.list[indexPath.row])
-            
-            do {
-                try managedContext.save()
-                self.getData()
-            } catch let error as NSError {
-                print("Could not delete \(error), \(error.userInfo)")
-            }
-            completion(true)
             
         }
         
         action.backgroundColor = .init(red: 121/235, green: 121/235, blue: 130/235, alpha: 1)
         return UISwipeActionsConfiguration(actions: [action])
         
-        
     }
 }
 
-extension UIButton {
-    
-    func changingButton(_ button: inout UIButton ) {
-        self.isEnabled = false
-        button.isEnabled = true
-    }
-    
-}
+
