@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import UIKit.UIApplication
+import UIKit.NSAttributedString
 
 
 class CoreData {
@@ -74,17 +75,28 @@ extension NSManagedObject {
     
     func renameAttribute(before: String, after: String) {
         
-//        let previousValue = value(forKey: before)
-//        setValue(previousValue, forKey: after)
-//        setValue(nil, forKey: before)
+        //        let previousValue = value(forKey: before)
+        //        setValue(previousValue, forKey: after)
+        //        setValue(nil, forKey: before)
         try! managedObjectContext?.save()
     }
 }
 
 
+
+// View Model
 struct Atodo {
     
     var title: String
     var done: Bool
-    
+    var attributeString: NSAttributedString {
+        
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: title)
+        
+        if done == true {
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+        }
+        
+        return attributeString
+    }
 }

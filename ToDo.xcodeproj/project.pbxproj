@@ -18,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E34CDED2268547A00D2C7A6 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ToDo/MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5E5BE2FF226702FE0091971C /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		5EEE8E462264554700AE58C6 /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EEE8E492264554700AE58C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +45,7 @@
 		5EEE8E3D2264554700AE58C6 = {
 			isa = PBXGroup;
 			children = (
+				5E34CDED2268547A00D2C7A6 /* MyPlayground.playground */,
 				5EEE8E482264554700AE58C6 /* ToDo */,
 				5EEE8E472264554700AE58C6 /* Products */,
 			);

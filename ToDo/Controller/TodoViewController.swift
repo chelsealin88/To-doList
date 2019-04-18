@@ -14,7 +14,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addTodoButton: UIButton!
     @IBOutlet weak var addtextField: UITextField!
-    @IBOutlet weak var buttomlayout: NSLayoutConstraint!
     
     let center : NotificationCenter = NotificationCenter.default
     var coredata = CoreData()
@@ -60,9 +59,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // get data from your persistent store
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         getData()
-        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     
@@ -117,13 +118,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func keyboardWillChange(noti: Notification) {
         print("keyboard will change \(noti.name.rawValue)")
         view.frame.origin.y = -300
-        
     }
     
     @objc func keyboardWillHide(noti: Notification) {
-        
         self.view.frame.origin.y = 0
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -144,7 +142,8 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let aTodo = list[indexPath.row]
-        cell.textLabel?.text = aTodo.title
+//        cell.textLabel?.text = aTodo.title
+        cell.textLabel?.attributedText = aTodo.attributeString
         
         if aTodo.done {
             cell.textLabel?.attributedText =  strikeThroughText(aTodo.title)
@@ -162,19 +161,31 @@ extension ViewController: UITableViewDelegate {
     
     // Done
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        
         let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
             
-            let aTodo = self.list[indexPath.row]
-            let cell = tableView.cellForRow(at: indexPath)
-            let title = aTodo.title
-            cell?.textLabel?.attributedText = self.strikeThroughText(title)
-            let currentBool = aTodo.done
-            self.coredata.list[indexPath.row].setValue(!currentBool, forKey: "done")
-            
-            try! self.coredata.appDelegate.persistentContainer.viewContext.save()
-            
-            completion(true)
-            
+            if self.status == true {
+                
+                let aTodo = self.list[indexPath.row]
+                let cell = tableView.cellForRow(at: indexPath)
+                let title = aTodo.title
+                let currentBool = aTodo.done
+                cell?.textLabel?.attributedText = self.strikeThroughText(title)
+                self.coredata.list[indexPath.row].setValue(!currentBool, forKey: "done")
+                try! self.coredata.appDelegate.persistentContainer.viewContext.save()
+                print("Done")
+                
+                
+                completion(true)
+                
+            } else {
+                
+                let undoAction = UIContextualAction(style: .normal, title: "Undo") { (action, view, completion) in
+                    
+                    print("test undo")
+                }
+            }
         }
         
         action.backgroundColor = .init(red: 58/235, green: 132/235, blue: 189/235, alpha: 1)
