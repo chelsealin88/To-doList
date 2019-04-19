@@ -167,7 +167,7 @@ extension ViewController: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath)
         let title = atodo.title
         
-        if doneStatus == false {
+        if doneStatus == true {
                     
             let doneAction = UIContextualAction(style: .normal, title: "Done", handler: { (action, view, completion) in
                 
@@ -184,44 +184,20 @@ extension ViewController: UITableViewDelegate {
 
         } else {
             
-            let undoAction = UIContextualAction(style: .normal, title: "Undo") { (action, view, done:(Bool) -> Void) in
+            let undoAction = UIContextualAction(style: .normal, title: "Undo", handler: { (action, view, completion) in
                 
-                print("Undone")
-            }
+                cell?.textLabel?.attributedText = atodo.attributeString
+                self.coredata.list[indexPath.row].setValue(!doneStatus, forKey: "done")
+                try! self.coredata.appDelegate.persistentContainer.viewContext.save()
+                
+                completion(true)
+
+            })
             
-            undoAction.backgroundColor = .red
+            undoAction.backgroundColor = .init(red: 181/255, green: 204/255, blue: 232/255, alpha: 1)
             return UISwipeActionsConfiguration(actions: [undoAction])
         }
-        
-    
-    
-    //            if self.atodo == true {
-    //
-    //                let aTodo = self.list[indexPath.row]
-    //                let cell = tableView.cellForRow(at: indexPath)
-    //                let title = aTodo.title
-    //                let currentBool = aTodo.done
-    //                cell?.textLabel?.attributedText = self.strikeThroughText(title)
-    //                self.coredata.list[indexPath.row].setValue(!currentBool, forKey: "done")
-    //                try! self.coredata.appDelegate.persistentContainer.viewContext.save()
-    //                print("Done")
-    //
-    //
-    //                completion(true)
-    //
-    //            } else {
-    //
-    //                let undoAction = UIContextualAction(style: .normal, title: "Undo") { (action, view, completion) in
-    //
-    //                    print("test undo")
-    //                }
-    //            }
-    //        }
-    //
-    
-//    doneAction.backgroundColor = .init(red: 58/235, green: 132/235, blue: 189/235, alpha: 1)
-//    return UISwipeActionsConfiguration(actions: [doneAction])
-    
+
 }
 
 
@@ -261,8 +237,28 @@ func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRow
     
 }
 
+}
 
-
-
-
+extension UIColor {
+    
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    /// Usage:
+    /// let color = UIColor(red: 0xFF, green: 0xFF, blue: 0xFF)
+    /// let color2 = UIColor(rgb: 0xFFFFFF)
+    ///
+    /// - Parameter rgb: 0xFFFFFF
+    convenience init(rgb: Int) {
+        self.init(
+            red: (rgb >> 16) & 0xFF,
+            green: (rgb >> 8) & 0xFF,
+            blue: rgb & 0xFF
+        )
+    }
 }
