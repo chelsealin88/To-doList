@@ -112,12 +112,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         addTodoButton.layer.shadowRadius = 0.0
         addTodoButton.layer.masksToBounds = false
     }
-    var b = true
-    var savekeyboardHeigh: CGFloat!
+    
     //keyboard
     @objc func keyboardWillChange(noti: Notification) {
         print("keyboard will change \(noti.name.rawValue)")
         view.frame.origin.y = -300
+        /// todo: keyboard heigh
     }
     
     @objc func keyboardWillHide(noti: Notification) {
@@ -142,7 +142,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let aTodo = list[indexPath.row]
-//        cell.textLabel?.text = aTodo.title
+        //        cell.textLabel?.text = aTodo.title
         cell.textLabel?.attributedText = aTodo.attributeString
         
         if aTodo.done {
@@ -162,69 +162,107 @@ extension ViewController: UITableViewDelegate {
     // Done
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        let atodo = self.list[indexPath.row]
+        let doneStatus = atodo.done // true刪除線
+        let cell = tableView.cellForRow(at: indexPath)
+        let title = atodo.title
         
-        let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
-            
-            if self.status == true {
+        if doneStatus == false {
+                    
+            let doneAction = UIContextualAction(style: .normal, title: "Done", handler: { (action, view, completion) in
                 
-                let aTodo = self.list[indexPath.row]
-                let cell = tableView.cellForRow(at: indexPath)
-                let title = aTodo.title
-                let currentBool = aTodo.done
-                cell?.textLabel?.attributedText = self.strikeThroughText(title)
-                self.coredata.list[indexPath.row].setValue(!currentBool, forKey: "done")
+                cell?.textLabel?.attributedText = atodo.attributeString
+                self.coredata.list[indexPath.row].setValue(!doneStatus, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
-                print("Done")
-                
+                print("done")
                 
                 completion(true)
+            })
+            
+            doneAction.backgroundColor = .init(red: 58/235, green: 132/235, blue: 189/235, alpha: 1)
+            return UISwipeActionsConfiguration(actions: [doneAction])
+
+        } else {
+            
+            let undoAction = UIContextualAction(style: .normal, title: "Undo") { (action, view, done:(Bool) -> Void) in
                 
-            } else {
-                
-                let undoAction = UIContextualAction(style: .normal, title: "Undo") { (action, view, completion) in
-                    
-                    print("test undo")
-                }
+                print("Undone")
             }
+            
+            undoAction.backgroundColor = .red
+            return UISwipeActionsConfiguration(actions: [undoAction])
         }
         
-        action.backgroundColor = .init(red: 58/235, green: 132/235, blue: 189/235, alpha: 1)
-        return UISwipeActionsConfiguration(actions: [action])
-    }
     
-    // Delete
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-            
-            if self.status == true {
-                
-                let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
-                let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
-                let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
-                    
-                    let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
-                    self.coredata.managedContext.delete(self.coredata.list[indexPath.row])
-                    
-                    do {
-                        try managedContext.save()
-                        self.getData()
-                    } catch let error as NSError {
-                        print("Could not delete \(error), \(error.userInfo)")
-                    }
-                    completion(true)
-                }
-                alert.addAction(cancleAction)
-                alert.addAction(deletetAction)
-                self.present(alert, animated: true, completion: nil)
-                
-            }
-            
-        }
-        
-        action.backgroundColor = .init(red: 121/235, green: 121/235, blue: 130/235, alpha: 1)
-        return UISwipeActionsConfiguration(actions: [action])
-        
-    }
+    
+    //            if self.atodo == true {
+    //
+    //                let aTodo = self.list[indexPath.row]
+    //                let cell = tableView.cellForRow(at: indexPath)
+    //                let title = aTodo.title
+    //                let currentBool = aTodo.done
+    //                cell?.textLabel?.attributedText = self.strikeThroughText(title)
+    //                self.coredata.list[indexPath.row].setValue(!currentBool, forKey: "done")
+    //                try! self.coredata.appDelegate.persistentContainer.viewContext.save()
+    //                print("Done")
+    //
+    //
+    //                completion(true)
+    //
+    //            } else {
+    //
+    //                let undoAction = UIContextualAction(style: .normal, title: "Undo") { (action, view, completion) in
+    //
+    //                    print("test undo")
+    //                }
+    //            }
+    //        }
+    //
+    
+//    doneAction.backgroundColor = .init(red: 58/235, green: 132/235, blue: 189/235, alpha: 1)
+//    return UISwipeActionsConfiguration(actions: [doneAction])
+    
 }
 
 
+// Delete
+func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    
+    let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+        
+        if self.status == true {
+            
+            let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
+            let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
+            let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
+                
+                let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
+                self.coredata.managedContext.delete(self.coredata.list[indexPath.row])
+                
+                do {
+                    try managedContext.save()
+                    self.getData()
+                } catch let error as NSError {
+                    print("Could not delete \(error), \(error.userInfo)")
+                }
+                completion(true)
+            }
+            alert.addAction(cancleAction)
+            alert.addAction(deletetAction)
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        
+    }
+    
+    action.backgroundColor = .init(red: 121/235, green: 121/235, blue: 130/235, alpha: 1)
+    return UISwipeActionsConfiguration(actions: [action])
+    
+    
+}
+
+
+
+
+
+}
