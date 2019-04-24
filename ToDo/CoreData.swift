@@ -23,6 +23,7 @@ class CoreData {
         return appDelegate.persistentContainer.viewContext
     }
     
+    // save list Data
     func saveData(title: String) {
         
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
@@ -45,6 +46,23 @@ class CoreData {
         }
         
     }
+    
+    // Save Catagory
+    func saveCategory(category: Acategory) {
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Category", in: managedContext)!
+        let object = NSManagedObject(entity: entity, insertInto: managedContext)
+        object.setValue(category, forKey: "name")
+        
+        do {
+            try managedContext.save()
+            list.append(object)
+        } catch let error as NSError {
+            print("Could not save \(error), \(error.userInfo)")
+        }
+        
+    }
+    
     
     typealias Completion = () -> Void
     
