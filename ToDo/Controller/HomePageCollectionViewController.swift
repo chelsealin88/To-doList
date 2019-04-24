@@ -14,6 +14,7 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     
     var categories : [Acategory] = [Acategory]()
+    var indexNumber = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +62,8 @@ class HomePageCollectionViewController: UICollectionViewController {
         
         if indexPath.item == categories.count {
             let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! HomePageCollectionViewCell
-            createcell.backgroundColor = .black
+            createcell.backgroundColor = .gray
+            createcell.layer.cornerRadius = 10 
             return createcell
         }
         
@@ -72,11 +74,16 @@ class HomePageCollectionViewController: UICollectionViewController {
         cell.layer.cornerRadius = 10
         
         
-        
     
         // Configure the cell
     
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        indexNumber = indexPath.row
+        performSegue(withIdentifier: "segue", sender: nil)
+        
     }
 
 //    @IBAction func addCategoryButton(_ sender: Any) {

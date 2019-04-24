@@ -18,8 +18,32 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                 <rect key="frame" x="0.0" y="0.0" width="250" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Y5-9t-nT9">
+                        <rect key="frame" x="210" y="-10" width="30" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="F7B-W5-7Fd"/>
+                            <constraint firstAttribute="height" constant="45" id="Mko-xp-ahI"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="50"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8t-w7-1rA">
+                        <rect key="frame" x="10" y="153" width="63" height="22"/>
+                        <fontDescription key="fontDescription" name="ArialHebrew-Bold" family="Arial Hebrew" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="S8t-w7-1rA" secondAttribute="bottom" constant="25" id="JrS-dz-F39"/>
+                <constraint firstItem="S8t-w7-1rA" firstAttribute="leading" secondItem="UOj-ae-jxb" secondAttribute="leading" constant="10" id="MF6-dS-3Z1"/>
+                <constraint firstItem="8Y5-9t-nT9" firstAttribute="top" secondItem="UOj-ae-jxb" secondAttribute="top" constant="-10" id="j0P-pa-CEo"/>
+                <constraint firstAttribute="trailing" secondItem="8Y5-9t-nT9" secondAttribute="trailing" constant="10" id="udA-mE-hgx"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="gTF-g3-THR"/>
             <size key="customSize" width="219" height="195"/>
             <point key="canvasLocation" x="254.34782608695653" y="116.18303571428571"/>

@@ -84,7 +84,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="MY LIST" id="OLL-Mo-atV"/>
+                    <navigationItem key="navigationItem" title="MY LIST" id="OLL-Mo-atV">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="vB2-D5-boU">
+                            <color key="tintColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <segue destination="DlJ-iT-hYU" kind="presentation" id="bBc-rx-VIk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addTodoButton" destination="Zax-aN-G83" id="v24-wI-UPJ"/>
                         <outlet property="addtextField" destination="gJh-jI-a6U" id="bqk-1j-I6B"/>
@@ -93,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2024.8" y="756.6502463054187"/>
+            <point key="canvasLocation" x="2394" y="713"/>
         </scene>
         <!--TO DO-->
         <scene sceneID="DQ5-hD-f0Q">
@@ -125,6 +132,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="TO DO" id="Zch-VH-Imv"/>
+                    <connections>
+                        <segue destination="kiB-4H-GsY" kind="presentation" identifier="segue" id="2PW-gH-pea"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDZ-5B-g4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -149,7 +159,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKs-zf-728" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="756.6502463054187"/>
+            <point key="canvasLocation" x="1641" y="487"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Fvk-yx-xJh">

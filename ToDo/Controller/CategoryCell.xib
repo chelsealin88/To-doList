@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -13,32 +13,30 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryCell" id="gTV-IL-0wX" customClass="HomePageCollectionViewCell" customModule="ToDo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="212" height="169"/>
+            <rect key="frame" x="0.0" y="0.0" width="250" height="200"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="212" height="169"/>
+                <rect key="frame" x="0.0" y="0.0" width="250" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ALL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgb-wI-QjZ">
-                        <rect key="frame" x="16" y="33" width="49" height="27"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" name="ArialHebrew-Bold" family="Arial Hebrew" pointSize="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task1" textAlignment="natural" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pgb-wI-QjZ">
+                        <rect key="frame" x="20" y="50" width="220" height="52.5"/>
+                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="25"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NHL-tZ-iTs">
-                        <rect key="frame" x="16" y="61" width="72" height="18.5"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NHL-tZ-iTs">
+                        <rect key="frame" x="20" y="112.5" width="72" height="17.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHA-T9-g3T">
-                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="18.5"/>
-                                <fontDescription key="fontDescription" name="ArialHebrew-Bold" family="Arial Hebrew" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="0.0" width="25.5" height="17.5"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tasks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AC3-Yj-kg9">
-                                <rect key="frame" x="33.5" y="0.0" width="38.5" height="18.5"/>
-                                <fontDescription key="fontDescription" name="ArialHebrew-Bold" family="Arial Hebrew" pointSize="15"/>
+                                <rect key="frame" x="33.5" y="0.0" width="38.5" height="17.5"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -47,13 +45,21 @@
                 </subviews>
             </view>
             <color key="backgroundColor" red="0.22658842800000001" green="0.51790297029999999" blue="0.74120926860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <constraints>
+                <constraint firstItem="NHL-tZ-iTs" firstAttribute="top" secondItem="pgb-wI-QjZ" secondAttribute="bottom" constant="10" id="7gL-Gr-l5g"/>
+                <constraint firstAttribute="trailing" secondItem="pgb-wI-QjZ" secondAttribute="trailing" constant="10" id="XaA-ud-3Xm"/>
+                <constraint firstItem="pgb-wI-QjZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="eCe-Rz-HOh"/>
+                <constraint firstItem="NHL-tZ-iTs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="hfA-QB-w9M"/>
+                <constraint firstAttribute="bottom" secondItem="NHL-tZ-iTs" secondAttribute="bottom" constant="70" id="lpL-ha-g4n"/>
+                <constraint firstItem="pgb-wI-QjZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="50" id="wtA-ef-htp"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="528" height="535"/>
             <connections>
                 <outlet property="categoryName" destination="pgb-wI-QjZ" id="mvO-OP-AFF"/>
                 <outlet property="tasksNumber" destination="UHA-T9-g3T" id="J0Q-gE-J9s"/>
             </connections>
-            <point key="canvasLocation" x="89.855072463768124" y="228.68303571428569"/>
+            <point key="canvasLocation" x="89.855072463768124" y="228.34821428571428"/>
         </collectionViewCell>
     </objects>
 </document>
