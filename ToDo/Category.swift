@@ -12,8 +12,6 @@ import UIKit
 struct Acategory {
     
     var name: String
-    var color : UIColor
-//    var type
     
 }
 

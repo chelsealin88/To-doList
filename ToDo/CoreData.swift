@@ -66,6 +66,16 @@ class CoreData {
     
     typealias Completion = () -> Void
     
+    func refresh(){
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
+        fetchRequest.shouldRefreshRefetchedObjects = true
+        
+        do {
+            list = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
     func getData(completion: Completion) {
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
@@ -107,14 +117,5 @@ struct Atodo {
     
     var title: String
     var done: Bool
-    var attributeString: NSAttributedString {
-        
-        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: title)
-        
-        if done == true {
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
-        }
-        
-        return attributeString
-    }
+   
 }
