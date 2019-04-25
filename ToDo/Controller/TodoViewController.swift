@@ -18,11 +18,12 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     let center : NotificationCenter = NotificationCenter.default
     var coredata = CoreData()
     var status = true
-    var list : [Atodo] {
-        ///todo: lazy
-        return coredata.list.map{$0.atodo}
-    }
     
+    var list : [ToDo] {
+        ///todo: lazy
+        return coredata.list//.map{$0.atodo}
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,10 +145,14 @@ extension TodoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let aTodo = list[indexPath.row]
-        cell.textLabel?.attributedText = aTodo.title.strikeThrough(bool: aTodo.done)
         
+//        cell.textLabel?.attributedText = aTodo.title.strikeThrough(bool: aTodo.done)
+        cell.textLabel?.attributedText = aTodo.title?.strikeThrough(bool: aTodo.done)
+        
+    
+    
         if aTodo.done {
-            cell.textLabel?.attributedText =  strikeThroughText(aTodo.title)
+            cell.textLabel?.attributedText =  strikeThroughText(aTodo.title!)
         }
         
         return cell
@@ -175,8 +180,8 @@ extension TodoViewController: UITableViewDelegate {
                 
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
-                self.coredata.refresh()
-                cell?.textLabel?.attributedText = atodo.title.strikeThrough(bool: !needAttribute)
+//                self.coredata.refresh()
+                cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 
                 
                 completion(true)
@@ -193,8 +198,8 @@ extension TodoViewController: UITableViewDelegate {
                 
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
-                self.coredata.refresh()
-                cell?.textLabel?.attributedText = atodo.title.strikeThrough(bool: !needAttribute)
+//                self.coredata.refresh()
+                cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 
                 completion(true)
                 

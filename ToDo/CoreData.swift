@@ -14,7 +14,8 @@ import UIKit.NSAttributedString
 
 class CoreData {
     
-    var list : [NSManagedObject] = []
+//    var list : [NSManagedObject] = []
+    var list : [ToDo] = []
     
     var appDelegate: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -28,8 +29,11 @@ class CoreData {
         
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
         let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
-        listObject.setValue(title, forKey: "title")
-        listObject.setValue(false, forKey: "done")
+        let todoObject = listObject as! ToDo
+        todoObject.title = title
+        todoObject.done = false
+//        listObject.setValue(title, forKey: "title")
+//        listObject.setValue(false, forKey: "done")
         
         // update all data
         for index in list {
@@ -40,7 +44,8 @@ class CoreData {
         
         do {
             try managedContext.save()
-            list.append(listObject)
+//            list.append(listObject)
+            list.append(todoObject)
         } catch let error as NSError {
             print("Could not save \(error), \(error.userInfo)")
         }
@@ -52,36 +57,33 @@ class CoreData {
         
         let entity = NSEntityDescription.entity(forEntityName: "Category", in: managedContext)!
         let object = NSManagedObject(entity: entity, insertInto: managedContext)
-        object.setValue(category, forKey: "name")
+        let categoryObject = object as! Category
+        categoryObject.name = category.name
+    
+//        object.setValue(category, forKey: "name")
         
         do {
             try managedContext.save()
-            list.append(object)
+//            list.append(a)
+            // todo: append category list
         } catch let error as NSError {
             print("Could not save \(error), \(error.userInfo)")
         }
-        
     }
+
+    
     
     
     typealias Completion = () -> Void
     
-    func refresh(){
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
-        fetchRequest.shouldRefreshRefetchedObjects = true
-        
-        do {
-            list = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
-    }
+
     func getData(completion: Completion) {
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
         
         do {
-            list = try managedContext.fetch(fetchRequest)
+            list = try managedContext.fetch(fetchRequest) as! [ToDo]
+//            let a = try managedContext.fetch(fetchRequest) as! [ToDo]
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
@@ -92,20 +94,17 @@ class CoreData {
 }
 
 extension NSManagedObject {
-    
-    var atodo: Atodo {
-        
-        let title: String = value(forKey: "title") as! String
-        let done: Bool = value(forKey: "done") as! Bool
-        
-        return Atodo.init(title: title, done: done)
-    }
-    
+
+//    var atodo: Atodo {
+//
+//        let title: String = value(forKey: "title") as! String
+//        let done: Bool = value(forKey: "done") as! Bool
+//
+//        return Atodo.init(title: title, done: done)
+//    }
+
     func renameAttribute(before: String, after: String) {
-        
-        //        let previousValue = value(forKey: before)
-        //        setValue(previousValue, forKey: after)
-        //        setValue(nil, forKey: before)
+
         try! managedObjectContext?.save()
     }
 }
@@ -113,9 +112,11 @@ extension NSManagedObject {
 
 
 // View Model
-struct Atodo {
-    
-    var title: String
-    var done: Bool
-   
-}
+//struct Atodo {
+//
+//    var title: String
+//    var done: Bool
+//
+//}
+
+//todo : 把CoreData當Model來要資料
