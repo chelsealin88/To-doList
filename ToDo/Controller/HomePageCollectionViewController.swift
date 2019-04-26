@@ -22,17 +22,15 @@ class HomePageCollectionViewController: UICollectionViewController {
         categories.append(.init(name: "test1"))
         categories.append(.init(name: "test2"))
         
-        let nib = UINib(nibName: "CategoryCell", bundle: nil)
-        self.collectionView.register(nib, forCellWithReuseIdentifier: "CategoryCell")
-        let createCellnib = UINib(nibName: "CreateCell", bundle: nil)
-        self.collectionView.register(createCellnib, forCellWithReuseIdentifier: "CreateCell")
+    
+        registerNib(nibname: "CategoryCell")
+        registerNib(nibname: "CreateCell")
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        // Do any additional setup after loading the view.
     }
     
     /*
@@ -61,7 +59,7 @@ class HomePageCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == categories.count {
-            let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! HomePageCollectionViewCell
+            let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! CreateCategoryCollectionViewCell
             createcell.backgroundColor = .gray
             createcell.layer.cornerRadius = 10 
             return createcell
@@ -121,6 +119,11 @@ class HomePageCollectionViewController: UICollectionViewController {
      
      }
      */
+    
+    func registerNib(nibname: String) {
+        let nib = UINib(nibName: nibname, bundle: nil)
+        self.collectionView.register(nib, forCellWithReuseIdentifier: nibname)
+    }
     
 }
 

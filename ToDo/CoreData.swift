@@ -16,6 +16,7 @@ class CoreData {
     
 //    var list : [NSManagedObject] = []
     var list : [ToDo] = []
+    var categoryList : [Category] = []
     
     var appDelegate: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -83,7 +84,6 @@ class CoreData {
         
         do {
             list = try managedContext.fetch(fetchRequest) as! [ToDo]
-//            let a = try managedContext.fetch(fetchRequest) as! [ToDo]
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }

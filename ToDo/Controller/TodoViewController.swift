@@ -180,7 +180,6 @@ extension TodoViewController: UITableViewDelegate {
                 
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
-//                self.coredata.refresh()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 
                 
@@ -198,7 +197,6 @@ extension TodoViewController: UITableViewDelegate {
                 
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
-//                self.coredata.refresh()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 
                 completion(true)
