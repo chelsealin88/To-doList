@@ -119,8 +119,8 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     //keyboard
     @objc func keyboardWillChange(noti: Notification) {
         print("keyboard will change \(noti.name.rawValue)")
-        guard let a = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { fatalError() }
-        let frame = a.cgRectValue
+        guard let getkeyboardheigh = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { fatalError() }
+        let frame = getkeyboardheigh.cgRectValue
         let height = frame.height
         
         view.frame.origin.y = -height
