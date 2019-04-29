@@ -13,14 +13,18 @@ private let reuseIdentifier = "Cell"
 
 class HomePageCollectionViewController: UICollectionViewController {
     
-    var categories : [Acategory] = [Acategory]()
+//    var categories : [Acategory] = [Acategory]()
+    var coredata = CoreData()
     var indexNumber = 0
+    var categories : [Category] {
+        return coredata.categoryList
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        categories.append(.init(name: "test1"))
-        categories.append(.init(name: "test2"))
+//        categories.append(.init(name: "test1"))
+//        categories.append(.init(name: "test2"))
         
     
         registerNib(nibname: "CategoryCell")
@@ -79,8 +83,8 @@ class HomePageCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item == categories.count {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "CreateCategoryViewController") as! CreateCategoryViewController
-            self.navigationController?.pushViewController(vc, animated: true)
+       
+            alertWithTextField()
             
         } else {
         
@@ -126,6 +130,34 @@ class HomePageCollectionViewController: UICollectionViewController {
     func registerNib(nibname: String) {
         let nib = UINib(nibName: nibname, bundle: nil)
         self.collectionView.register(nib, forCellWithReuseIdentifier: nibname)
+    }
+    
+    //Save Data
+    func save(categoryName: String) {
+        coredata.saveCategory(category: categoryName)
+    }
+    
+    func alertWithTextField() {
+        let alert = UIAlertController(title: "Create a new category", message: "", preferredStyle: .alert)
+        let save = UIAlertAction(title: "OK", style: .default) { (alertAction) in
+            let textField = alert.textFields![0] as UITextField
+            guard let categoryName = textField.text else { return }
+            if categoryName != "" {
+                //todo : save data
+                self.save(categoryName: categoryName)
+                self.collectionView.reloadData()
+                print("成功輸入")
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .default) { (alertAction) in }
+        alert.addTextField { (textField) in
+            textField.placeholder = "Category name"
+        }
+        alert.addAction(cancel)
+        alert.addAction(save)
+        
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
 }

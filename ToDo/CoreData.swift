@@ -54,19 +54,16 @@ class CoreData {
     }
     
     // Save Catagory
-    func saveCategory(category: Acategory) {
+    func saveCategory(category: String) {
         
         let entity = NSEntityDescription.entity(forEntityName: "Category", in: managedContext)!
         let object = NSManagedObject(entity: entity, insertInto: managedContext)
         let categoryObject = object as! Category
-        categoryObject.name = category.name
-    
-//        object.setValue(category, forKey: "name")
+        categoryObject.name = category
         
         do {
             try managedContext.save()
-//            list.append(a)
-            // todo: append category list
+            categoryList.append(categoryObject)
         } catch let error as NSError {
             print("Could not save \(error), \(error.userInfo)")
         }
