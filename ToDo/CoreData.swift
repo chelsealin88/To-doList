@@ -25,7 +25,7 @@ class CoreData {
         return appDelegate.persistentContainer.viewContext
     }
     
-    // save list Data
+    // save list Dat
     func saveData(title: String) {
         
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E1863652276E4D400B9743F /* CreateCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1863642276E4D400B9743F /* CreateCategoryViewController.swift */; };
 		5E5BE300226702FE0091971C /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BE2FF226702FE0091971C /* CoreData.swift */; };
 		5E616718226FF41E00C8C273 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E616717226FF41E00C8C273 /* Category.swift */; };
 		5E61671E227001FC00C8C273 /* CreateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E61671D227001FC00C8C273 /* CreateCell.xib */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E1863642276E4D400B9743F /* CreateCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCategoryViewController.swift; sourceTree = "<group>"; };
 		5E34CDED2268547A00D2C7A6 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ToDo/MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5E5BE2FF226702FE0091971C /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		5E616717226FF41E00C8C273 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				5EEE8E4B2264554700AE58C6 /* TodoViewController.swift */,
+				5E1863642276E4D400B9743F /* CreateCategoryViewController.swift */,
 				5E917329226F029F0066015A /* HomePageCollectionViewController.swift */,
 			);
 			path = Controller;
@@ -205,6 +208,7 @@
 			files = (
 				5E91732B226F029F0066015A /* HomePageCollectionViewController.swift in Sources */,
 				5EEE8E4C2264554700AE58C6 /* TodoViewController.swift in Sources */,
+				5E1863652276E4D400B9743F /* CreateCategoryViewController.swift in Sources */,
 				5E917332226F0EF10066015A /* HomePageCollectionViewCell.swift in Sources */,
 				5EEE8E6022645E1100AE58C6 /* ListTableViewCell.swift in Sources */,
 				5E616720227296A100C8C273 /* CreateCategoryCollectionViewCell.swift in Sources */,

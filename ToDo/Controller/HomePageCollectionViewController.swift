@@ -60,6 +60,7 @@ class HomePageCollectionViewController: UICollectionViewController {
         
         if indexPath.item == categories.count {
             let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! HomePageCollectionViewCell
+            
             createcell.backgroundColor = .gray
             createcell.layer.cornerRadius = 10 
             return createcell
@@ -71,22 +72,24 @@ class HomePageCollectionViewController: UICollectionViewController {
         cell.categoryName.text = type.name
         cell.layer.cornerRadius = 10
         
-        
-        
-        // Configure the cell
-        
+
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        if indexPath.item == categories.count {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "CreateCategoryViewController") as! CreateCategoryViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        } else {
+        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "TodoViewController") as! TodoViewController
         self.navigationController?.pushViewController(vc, animated: true)
         
-        
+        }
+    
     }
-    
-    
     
     // MARK: UICollectionViewDelegate
     
