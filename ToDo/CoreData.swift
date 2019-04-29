@@ -34,7 +34,6 @@ class CoreData {
         todoObject.title = title
         todoObject.done = false
 //        listObject.setValue(title, forKey: "title")
-//        listObject.setValue(false, forKey: "done")
         
         // update all data
         for index in list {
@@ -45,10 +44,9 @@ class CoreData {
         
         do {
             try managedContext.save()
-//            list.append(listObject)
             list.append(todoObject)
         } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
+            fatalError("\(error)")
         }
         
     }
@@ -65,14 +63,29 @@ class CoreData {
             try managedContext.save()
             categoryList.append(categoryObject)
         } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
+            fatalError("\(error)")
         }
     }
 
     
     
-    
     typealias Completion = () -> Void
+    
+    func getCategoryData(completion: Completion) {
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Category")
+        
+        do {
+            categoryList = try managedContext.fetch(fetchRequest) as! [Category]
+        } catch let error as NSError {
+            fatalError("\(error)")
+        }
+        
+        completion()
+        
+    }
+
+
     
 
     func getData(completion: Completion) {
@@ -86,7 +99,7 @@ class CoreData {
         }
         
         completion()
-        
+
     }
 }
 

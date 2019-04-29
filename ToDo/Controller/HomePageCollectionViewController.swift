@@ -13,7 +13,7 @@ private let reuseIdentifier = "Cell"
 
 class HomePageCollectionViewController: UICollectionViewController {
     
-//    var categories : [Acategory] = [Acategory]()
+    
     var coredata = CoreData()
     var indexNumber = 0
     var categories : [Category] {
@@ -22,10 +22,6 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        categories.append(.init(name: "test1"))
-//        categories.append(.init(name: "test2"))
-        
     
         registerNib(nibname: "CategoryCell")
         registerNib(nibname: "CreateCell")
@@ -34,9 +30,18 @@ class HomePageCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        coredata.getCategoryData {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    @IBAction func editButton(_ sender: Any) {
+    }
     /*
      // MARK: - Navigation
      
@@ -146,7 +151,6 @@ class HomePageCollectionViewController: UICollectionViewController {
                 //todo : save data
                 self.save(categoryName: categoryName)
                 self.collectionView.reloadData()
-                print("成功輸入")
             }
         }
         let cancel = UIAlertAction(title: "Cancel", style: .default) { (alertAction) in }

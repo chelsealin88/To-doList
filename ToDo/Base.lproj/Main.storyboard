@@ -133,8 +133,14 @@
                     <navigationItem key="navigationItem" title="TO DO" id="Zch-VH-Imv">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="fEv-zg-ccG">
                             <color key="tintColor" red="0.22658842800000001" green="0.51790297029999999" blue="0.74120926860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <connections>
+                                <action selector="editButton:" destination="pVJ-ep-iBu" id="U7r-4p-Zpp"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editButton" destination="fEv-zg-ccG" id="n9g-OO-UHC"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDZ-5B-g4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
