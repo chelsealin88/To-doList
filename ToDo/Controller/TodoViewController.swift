@@ -68,7 +68,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    
     @IBAction func addTodoButton(_ sender: Any) {
         
         guard let todotext = addtextField.text, !todotext.isEmpty else {

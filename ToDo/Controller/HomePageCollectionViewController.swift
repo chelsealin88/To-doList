@@ -29,7 +29,7 @@ class HomePageCollectionViewController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+//        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,13 +86,13 @@ class HomePageCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == categories.count {
-            let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! HomePageCollectionViewCell
-        
+            let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! CreateCategoryCollectionViewCell
+
             createcell.backgroundColor = .gray
-            createcell.layer.cornerRadius = 10 
+            createcell.layer.cornerRadius = 10
             return createcell
         }
-        
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! HomePageCollectionViewCell
         let type = categories[indexPath.row]
         cell.categoryName.text = type.name
@@ -154,7 +154,7 @@ class HomePageCollectionViewController: UICollectionViewController {
      */
     
     func registerNib(nibname: String) {
-        let nib = UINib(nibName: nibname, bundle: nil)
+        let nib = UINib(nibName: nibname, bundle: .main)
         self.collectionView.register(nib, forCellWithReuseIdentifier: nibname)
     }
     
