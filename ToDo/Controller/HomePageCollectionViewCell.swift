@@ -12,7 +12,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var tasksNumber: UILabel!
     @IBOutlet weak var categoryName: UILabel!
-    
+    @IBOutlet weak var deletebutton: UIButton!
     
     
     override func awakeFromNib() {
@@ -20,4 +20,8 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    @IBAction func deletebutton(_ sender: Any) {
+        
+    }
+    
 }

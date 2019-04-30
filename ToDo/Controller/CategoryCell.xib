@@ -24,23 +24,17 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oRP-Cz-g5Z">
                                 <rect key="frame" x="20" y="66" width="140" height="48"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task1Task1Task1Task1Task1Task1Task1Task1Task1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hQI-cf-2tz">
-                                        <rect key="frame" x="0.0" y="0.0" width="140" height="23"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Task1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hQI-cf-2tz">
+                                        <rect key="frame" x="0.0" y="0.0" width="55.5" height="23"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2mk-p8-IlW">
-                                        <rect key="frame" x="0.0" y="28" width="82" height="20"/>
+                                        <rect key="frame" x="0.0" y="28" width="28.5" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k1T-TJ-FUM">
                                                 <rect key="frame" x="0.0" y="0.0" width="28.5" height="20"/>
-                                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tasks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DkY-WP-6i1">
-                                                <rect key="frame" x="38.5" y="0.0" width="43.5" height="20"/>
                                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -65,6 +59,9 @@
                             <constraint firstAttribute="height" constant="50" id="s3e-gK-EXz"/>
                         </constraints>
                         <state key="normal" title="Button" image="Button-Delete-512"/>
+                        <connections>
+                            <action selector="deletebutton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="IvH-nY-kgn"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
@@ -78,8 +75,21 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="485" height="537"/>
+            <connections>
+                <outlet property="categoryName" destination="hQI-cf-2tz" id="fQ6-Qe-S2l"/>
+                <outlet property="deletebutton" destination="KHZ-hT-bRH" id="EL9-AF-BaZ"/>
+                <outlet property="tasksNumber" destination="k1T-TJ-FUM" id="KwQ-yC-Hlp"/>
+            </connections>
             <point key="canvasLocation" x="-214" y="99"/>
         </collectionViewCell>
+        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAx-bc-FoL">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <constraints>
+                <constraint firstAttribute="width" constant="50" id="Jwn-9X-g9s"/>
+                <constraint firstAttribute="height" constant="50" id="aKv-S6-G8k"/>
+            </constraints>
+            <state key="normal" title="Button" image="Button-Delete-512"/>
+        </button>
     </objects>
     <resources>
         <image name="Button-Delete-512" width="512" height="512"/>

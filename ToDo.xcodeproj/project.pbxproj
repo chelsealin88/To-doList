@@ -69,6 +69,8 @@
 			children = (
 				5E917331226F0EF10066015A /* CategoryCell.xib */,
 				5E61671D227001FC00C8C273 /* CreateCell.xib */,
+				5E917330226F0EF10066015A /* HomePageCollectionViewCell.swift */,
+				5E61671F227296A100C8C273 /* CreateCategoryCollectionViewCell.swift */,
 			);
 			name = View;
 			path = Controller;
@@ -123,8 +125,6 @@
 				5E5BE2FF226702FE0091971C /* CoreData.swift */,
 				5E616717226FF41E00C8C273 /* Category.swift */,
 				5EEE8E5F22645E1100AE58C6 /* ListTableViewCell.swift */,
-				5E917330226F0EF10066015A /* HomePageCollectionViewCell.swift */,
-				5E61671F227296A100C8C273 /* CreateCategoryCollectionViewCell.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

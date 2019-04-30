@@ -15,7 +15,7 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     
     var coredata = CoreData()
-    var indexNumber = 0
+//    var deletebuttonisHidden = Bool()
     var categories : [Category] {
         return coredata.categoryList
     }
@@ -40,8 +40,27 @@ class HomePageCollectionViewController: UICollectionViewController {
         }
     }
     
-    @IBAction func editButton(_ sender: Any) {
+    
+    @IBAction func editButton(_ sender: UIBarButtonItem) {
+        
+//        deletebuttonisHidden = true
+
+//        guard let title = sender.title else { return }
+//        switch title {
+//        case "edit":
+//            // edit 觸發時開始觀察
+//            NotificationCenter.default.addObserver(self, selector: #selector(<#objc func#>), name: .didEditCategory, object: nil)
+//            break
+//        case "complete":
+//            // edit -> complete 結束觀察
+//            break
+//        default:
+//            fatalError()
+//        }
     }
+    
+//    @objc func
+   
     /*
      // MARK: - Navigation
      
@@ -59,7 +78,6 @@ class HomePageCollectionViewController: UICollectionViewController {
     //        return 1
     //    }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return categories.count + 1
@@ -69,18 +87,21 @@ class HomePageCollectionViewController: UICollectionViewController {
         
         if indexPath.item == categories.count {
             let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! HomePageCollectionViewCell
-            
+        
             createcell.backgroundColor = .gray
             createcell.layer.cornerRadius = 10 
             return createcell
         }
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! HomePageCollectionViewCell
-        
         let type = categories[indexPath.row]
         cell.categoryName.text = type.name
         cell.layer.cornerRadius = 10
         
+        
+//        if deletebuttonisHidden == true {
+//            cell.deletebutton.isHidden = false
+//        }
 
         return cell
     }
@@ -186,4 +207,12 @@ extension HomePageCollectionViewController : UICollectionViewDelegateFlowLayout 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+}
+
+
+extension Notification.Name {
+    
+    static let didEditCategory = Notification.Name("didEditCategory")
+    static let didCompleteCategory = Notification.Name("didCompleteCategory")
+    
 }

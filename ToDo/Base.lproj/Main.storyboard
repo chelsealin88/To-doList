@@ -138,9 +138,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="editButton" destination="fEv-zg-ccG" id="n9g-OO-UHC"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDZ-5B-g4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
