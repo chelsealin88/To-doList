@@ -122,11 +122,12 @@ extension NSManagedObject {
 
 
 // View Model
-//struct Atodo {
-//
-//    var title: String
-//    var done: Bool
-//
-//}
+struct Atodo {
+
+    var title: String
+    var done: Bool
+    
+
+}
 
 //todo : 把CoreData當Model來要資料

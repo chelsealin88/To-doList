@@ -18,7 +18,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     let center : NotificationCenter = NotificationCenter.default
     var coredata = CoreData()
     var status = true
-    
     var list : [ToDo] {
         ///todo: lazy
         return coredata.list//.map{$0.atodo}
