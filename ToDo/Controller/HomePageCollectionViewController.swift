@@ -15,7 +15,6 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     
     var coredata = CoreData()
-    var deletebuttonisHidden : Bool = false
     var categories : [Category] {
         return coredata.categoryList
     }
@@ -43,7 +42,6 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     @IBAction func editButton(_ sender: UIBarButtonItem) {
         
-//        deletebuttonisHidden = true
         
         NotificationCenter.default.post(name: .didEditCategory, object: nil)
 
@@ -51,7 +49,7 @@ class HomePageCollectionViewController: UICollectionViewController {
 //        switch title {
 //        case "edit":
 //            // edit 觸發時開始觀察
-//            NotificationCenter.default.addObserver(self, selector: #selector(<#objc func#>), name: .didEditCategory, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(selector), name: .deleteCategory, object: nil)
 //            break
 //        case "complete":
 //            // edit -> complete 結束觀察
@@ -61,7 +59,9 @@ class HomePageCollectionViewController: UICollectionViewController {
 //        }
     }
     
-//    @objc func
+    @objc func selector() {
+        print("clicked")
+    }
    
     /*
      // MARK: - Navigation
@@ -100,10 +100,6 @@ class HomePageCollectionViewController: UICollectionViewController {
         let type = categories[indexPath.row]
         cell.categoryName.text = type.name
         cell.view.layer.cornerRadius = 10
-        
-//        if deletebuttonisHidden == true {
-//            cell.deletebutton.isHidden = false
-//        }
         cell.notificationAddObserver()
 
         return cell
@@ -217,5 +213,6 @@ extension Notification.Name {
     
     static let didEditCategory = Notification.Name("didEditCategory")
     static let didCompleteCategory = Notification.Name("didCompleteCategory")
+    static let deleteCategory = Notification.Name("deleteCategory")
     
 }

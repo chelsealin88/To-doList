@@ -39,6 +39,8 @@ class HomePageCollectionViewCell: UICollectionViewCell {
 
     @IBAction func deletebutton(_ sender: Any) {
         
+        NotificationCenter.default.post(name: .deleteCategory, object: tag)
+        
     }
     
 }
