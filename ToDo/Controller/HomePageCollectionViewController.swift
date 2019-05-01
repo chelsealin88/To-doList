@@ -14,7 +14,7 @@ private let reuseIdentifier = "Cell"
 class HomePageCollectionViewController: UICollectionViewController {
     
     @IBOutlet weak var editButton: UIBarButtonItem!
-
+    
     var coredata = CoreData()
     var editStatus = Bool()
     var categories : [Category] {
@@ -23,14 +23,14 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         registerNib(nibname: "CategoryCell")
         registerNib(nibname: "CreateCell")
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         // Register cell classes
-//        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,21 +45,13 @@ class HomePageCollectionViewController: UICollectionViewController {
     @IBAction func editButton(_ sender: UIBarButtonItem) {
         
         NotificationCenter.default.post(name: .didEditCategory, object: nil)
-//
-//        if editStatus == true {
-//
-//            sender.title = "1"
-//        } else {
-//            sender.title = "2"
-//
-//        }
         
         guard let title = sender.title else { return }
         switch title {
         case "Edit":
-//         edit 觸發時開始觀察
+            //         edit 觸發時開始觀察
             sender.title = "Save"
-        NotificationCenter.default.addObserver(self, selector: #selector(dodelete), name: .deleteCategory, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(doDelete), name: .deleteCategory, object: nil)
         case "Save":
             sender.title = "Edit"
             // edit -> complete 結束觀察
@@ -69,13 +61,40 @@ class HomePageCollectionViewController: UICollectionViewController {
         }
     }
     
-    @objc func dodelete(_ notification: Notification) {
-        if let target = notification.userInfo?["tag"] as? Int {
-            print(target)
+    // Delete Category
+    @objc func doDelete(_ notification: Notification) {
+        guard let index = notification.userInfo?["tag"] as? Int else { return }
+        let type = categories[index]
+        
+        let action = UIAlertAction(title: "Delete", style: .normal) { (action, view, completion) in
+            
+                let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
+                let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
+                let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
+                    
+                    let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
+                    self.coredata.managedContext.delete(type)
+                    
+                    do {
+                        try managedContext.save()
+                        self.coredata.getCategoryData {
+                            self.collectionView.reloadData()
+                        }
+                    } catch let error as NSError {
+                        fatalError("\(error)")
+                    }
+                    completion(true)
+                }
+                alert.addAction(cancleAction)
+                alert.addAction(deletetAction)
+                self.present(alert, animated: true, completion: nil)
+            
         }
         
     }
-   
+    
+    
+    
     /*
      // MARK: - Navigation
      
@@ -108,30 +127,30 @@ class HomePageCollectionViewController: UICollectionViewController {
         }
         
         
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! HomePageCollectionViewCell
         let type = categories[indexPath.row]
         cell.categoryName.text = type.name
         cell.view.layer.cornerRadius = 10
         cell.notificationAddObserver()
-        cell.tag = indexPath.item + 10
-
+        cell.tag = indexPath.item
+        
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item == categories.count {
-       
+            
             alertWithTextField()
             
         } else {
-        
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "TodoViewController") as! TodoViewController
-        self.navigationController?.pushViewController(vc, animated: true)
-        
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "TodoViewController") as! TodoViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         }
-    
+        
     }
     
     // MARK: UICollectionViewDelegate

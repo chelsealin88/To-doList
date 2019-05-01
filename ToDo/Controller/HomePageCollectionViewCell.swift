@@ -42,6 +42,7 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         
         NotificationCenter.default.post(name: .deleteCategory, object: nil, userInfo: ["tag": tag])
         
+        
     }
     
 }
