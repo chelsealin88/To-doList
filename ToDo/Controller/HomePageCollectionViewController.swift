@@ -13,8 +13,10 @@ private let reuseIdentifier = "Cell"
 
 class HomePageCollectionViewController: UICollectionViewController {
     
-    
+    @IBOutlet weak var editButton: UIBarButtonItem!
+
     var coredata = CoreData()
+    var editStatus = Bool()
     var categories : [Category] {
         return coredata.categoryList
     }
@@ -42,25 +44,36 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     @IBAction func editButton(_ sender: UIBarButtonItem) {
         
-        
         NotificationCenter.default.post(name: .didEditCategory, object: nil)
-
-//        guard let title = sender.title else { return }
-//        switch title {
-//        case "edit":
-//            // edit 觸發時開始觀察
-            NotificationCenter.default.addObserver(self, selector: #selector(selector), name: .deleteCategory, object: nil)
-//            break
-//        case "complete":
-//            // edit -> complete 結束觀察
-//            break
-//        default:
-//            fatalError()
+//
+//        if editStatus == true {
+//
+//            sender.title = "1"
+//        } else {
+//            sender.title = "2"
+//
 //        }
+        
+        guard let title = sender.title else { return }
+        switch title {
+        case "Edit":
+//         edit 觸發時開始觀察
+            sender.title = "Save"
+        NotificationCenter.default.addObserver(self, selector: #selector(dodelete), name: .deleteCategory, object: nil)
+        case "Save":
+            sender.title = "Edit"
+            // edit -> complete 結束觀察
+            break
+        default:
+            fatalError()
+        }
     }
     
-    @objc func selector() {
-        print("clicked")
+    @objc func dodelete(_ notification: Notification) {
+        if let target = notification.userInfo?["tag"] as? Int {
+            print(target)
+        }
+        
     }
    
     /*
@@ -101,6 +114,7 @@ class HomePageCollectionViewController: UICollectionViewController {
         cell.categoryName.text = type.name
         cell.view.layer.cornerRadius = 10
         cell.notificationAddObserver()
+        cell.tag = indexPath.item + 10
 
         return cell
     }

@@ -112,7 +112,7 @@ extension NSManagedObject {
 //
 //        return Atodo.init(title: title, done: done)
 //    }
-
+    
     func renameAttribute(before: String, after: String) {
 
         try! managedObjectContext?.save()
@@ -122,12 +122,12 @@ extension NSManagedObject {
 
 
 // View Model
-struct Atodo {
-
-    var title: String
-    var done: Bool
-    
-
-}
+//struct Atodo {
+//
+//    var title: String
+//    var done: Bool
+//
+//
+//}
 
 //todo : 把CoreData當Model來要資料

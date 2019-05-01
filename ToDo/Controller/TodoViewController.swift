@@ -177,13 +177,11 @@ extension TodoViewController: UITableViewDelegate {
         
         if needAttribute ==  false {
             
-            
             let doneAction = UIContextualAction(style: .normal, title: "Done", handler: { (action, view, completion) in
                 
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
-                
                 
                 completion(true)
             })
@@ -192,8 +190,6 @@ extension TodoViewController: UITableViewDelegate {
             return UISwipeActionsConfiguration(actions: [doneAction])
             
         } else {
-            
-            
             
             let undoAction = UIContextualAction(style: .normal, title: "Undo", handler: { (action, view, completion) in
                 
@@ -209,8 +205,7 @@ extension TodoViewController: UITableViewDelegate {
             return UISwipeActionsConfiguration(actions: [undoAction])
         }
         
-    }
-    
+    }    
     
     // Delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

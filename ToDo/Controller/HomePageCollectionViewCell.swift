@@ -36,10 +36,11 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         deletebutton.isHidden.toggle()
     }
     
+    
 
     @IBAction func deletebutton(_ sender: Any) {
         
-        NotificationCenter.default.post(name: .deleteCategory, object: tag)
+        NotificationCenter.default.post(name: .deleteCategory, object: nil, userInfo: ["tag": tag])
         
     }
     
