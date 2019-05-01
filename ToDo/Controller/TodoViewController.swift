@@ -177,13 +177,13 @@ extension TodoViewController: UITableViewDelegate {
         
         if needAttribute ==  false {
             
-            let doneAction = UIAlertAction(style: .normal, title: "Done", handler: { (action, view, completion) in
+            let doneAction = UIContextualAction(style: .normal, title: "Done", handler: { (action, view, completion) in
                 
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 
-                completion(true)
+                completion(true) 
             })
             
             doneAction.backgroundColor = .init(red: 58/235, green: 132/235, blue: 189/235, alpha: 1)
@@ -191,7 +191,7 @@ extension TodoViewController: UITableViewDelegate {
             
         } else {
             
-            let undoAction = UIAlertAction(style: .normal, title: "Undo", handler: { (action, view, completion) in
+            let undoAction = UIContextualAction(style: .normal, title: "Undo", handler: { (action, view, completion) in
                 
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()

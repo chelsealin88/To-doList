@@ -66,30 +66,30 @@ class HomePageCollectionViewController: UICollectionViewController {
         guard let index = notification.userInfo?["tag"] as? Int else { return }
         let type = categories[index]
         
-        let action = UIAlertAction(title: "Delete", style: .normal) { (action, view, completion) in
-            
-                let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
-                let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
-                let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
-                    
-                    let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
-                    self.coredata.managedContext.delete(type)
-                    
-                    do {
-                        try managedContext.save()
-                        self.coredata.getCategoryData {
-                            self.collectionView.reloadData()
-                        }
-                    } catch let error as NSError {
-                        fatalError("\(error)")
-                    }
-                    completion(true)
-                }
-                alert.addAction(cancleAction)
-                alert.addAction(deletetAction)
-                self.present(alert, animated: true, completion: nil)
-            
-        }
+//        let action = UIAlertAction(title: "Delete", style: .normal) { (action, view, completion) in
+//            
+//                let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
+//                let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
+//                let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
+//                    
+//                    let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
+//                    self.coredata.managedContext.delete(type)
+//                    
+//                    do {
+//                        try managedContext.save()
+//                        self.coredata.getCategoryData {
+//                            self.collectionView.reloadData()
+//                        }
+//                    } catch let error as NSError {
+//                        fatalError("\(error)")
+//                    }
+//                    completion(true)
+//                }
+//                alert.addAction(cancleAction)
+//                alert.addAction(deletetAction)
+//                self.present(alert, animated: true, completion: nil)
+//            
+//        }
         
     }
     
