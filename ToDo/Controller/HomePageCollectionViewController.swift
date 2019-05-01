@@ -15,7 +15,7 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     
     var coredata = CoreData()
-//    var deletebuttonisHidden = Bool()
+    var deletebuttonisHidden : Bool = false
     var categories : [Category] {
         return coredata.categoryList
     }
@@ -44,6 +44,8 @@ class HomePageCollectionViewController: UICollectionViewController {
     @IBAction func editButton(_ sender: UIBarButtonItem) {
         
 //        deletebuttonisHidden = true
+        
+        NotificationCenter.default.post(name: .didEditCategory, object: nil)
 
 //        guard let title = sender.title else { return }
 //        switch title {
@@ -87,21 +89,22 @@ class HomePageCollectionViewController: UICollectionViewController {
         
         if indexPath.item == categories.count {
             let createcell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateCell", for: indexPath) as! CreateCategoryCollectionViewCell
-
-            createcell.backgroundColor = .gray
-            createcell.layer.cornerRadius = 10
+            createcell.view.layer.cornerRadius = 10
+            
             return createcell
         }
+        
+        
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! HomePageCollectionViewCell
         let type = categories[indexPath.row]
         cell.categoryName.text = type.name
-        cell.layer.cornerRadius = 10
-        
+        cell.view.layer.cornerRadius = 10
         
 //        if deletebuttonisHidden == true {
 //            cell.deletebutton.isHidden = false
 //        }
+        cell.notificationAddObserver()
 
         return cell
     }

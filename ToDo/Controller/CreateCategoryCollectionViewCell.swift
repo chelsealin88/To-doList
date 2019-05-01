@@ -10,4 +10,12 @@ import UIKit
 
 class CreateCategoryCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var view: UIView!
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
 }

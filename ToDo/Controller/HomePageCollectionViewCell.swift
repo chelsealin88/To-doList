@@ -13,12 +13,29 @@ class HomePageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tasksNumber: UILabel!
     @IBOutlet weak var categoryName: UILabel!
     @IBOutlet weak var deletebutton: UIButton!
+    @IBOutlet weak var view: UIView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
+
+    
+    func notificationAddObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(buttonisClick),
+            name: .didEditCategory,
+            object: nil)
+    }
+    
+    @objc func buttonisClick() {
+        
+        deletebutton.isHidden.toggle()
+    }
+    
 
     @IBAction func deletebutton(_ sender: Any) {
         

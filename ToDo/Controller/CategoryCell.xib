@@ -53,12 +53,12 @@
                         </constraints>
                     </view>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KHZ-hT-bRH">
-                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <rect key="frame" x="5" y="5" width="35" height="35"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="LX4-c3-dDD"/>
-                            <constraint firstAttribute="height" constant="50" id="s3e-gK-EXz"/>
+                            <constraint firstAttribute="width" secondItem="KHZ-hT-bRH" secondAttribute="height" multiplier="1:1" id="CcC-sW-Hvu"/>
+                            <constraint firstAttribute="width" constant="35" id="ROx-eI-70G"/>
                         </constraints>
-                        <state key="normal" title="Button" image="Button-Delete-512"/>
+                        <state key="normal" title="Button" image="Button-Delete-512拷貝"/>
                         <connections>
                             <action selector="deletebutton:" destination="gTV-IL-0wX" eventType="touchUpInside" id="IvH-nY-kgn"/>
                         </connections>
@@ -68,10 +68,10 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="KGq-fE-h9t" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="180:200" id="3py-sm-hxD"/>
-                <constraint firstItem="KHZ-hT-bRH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="OiU-ch-vI6"/>
+                <constraint firstItem="KHZ-hT-bRH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Evh-yi-iMT"/>
                 <constraint firstAttribute="bottom" secondItem="KGq-fE-h9t" secondAttribute="bottom" id="R7C-gE-K7Z"/>
                 <constraint firstAttribute="trailing" secondItem="KGq-fE-h9t" secondAttribute="trailing" id="jNv-Ly-Yqk"/>
-                <constraint firstItem="KHZ-hT-bRH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="n3x-oz-8Sy"/>
+                <constraint firstItem="KHZ-hT-bRH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="n8G-ne-2fp"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="485" height="537"/>
@@ -79,11 +79,12 @@
                 <outlet property="categoryName" destination="hQI-cf-2tz" id="fQ6-Qe-S2l"/>
                 <outlet property="deletebutton" destination="KHZ-hT-bRH" id="EL9-AF-BaZ"/>
                 <outlet property="tasksNumber" destination="k1T-TJ-FUM" id="KwQ-yC-Hlp"/>
+                <outlet property="view" destination="KGq-fE-h9t" id="9fs-vD-igK"/>
             </connections>
-            <point key="canvasLocation" x="-214" y="99"/>
+            <point key="canvasLocation" x="-215.625" y="98.75"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Button-Delete-512" width="512" height="512"/>
+        <image name="Button-Delete-512拷貝" width="512" height="512"/>
     </resources>
 </document>
