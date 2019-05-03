@@ -37,11 +37,11 @@ class CoreData {
 //        listObject.setValue(title, forKey: "title")
         
         // update all data
-        for index in list {
-            if index.value(forKeyPath: "done") as? Bool == nil {
-                index.setValue(false, forKey: "done")
-            }
-        }
+//        for index in list {
+//            if index.value(forKeyPath: "done") as? Bool == nil {
+//                index.setValue(false, forKey: "done")
+//            }
+//        }
         
         do {
             try managedContext.save()
@@ -50,6 +50,9 @@ class CoreData {
             fatalError("\(error)")
         }
         
+    }
+    func save()throws{
+           try managedContext.save()
     }
     
     // Save Catagory
@@ -86,7 +89,19 @@ class CoreData {
         
     }
 
-
+//    func getTodoFor(categoryName:String)->[ToDo]{
+//        guard let theone =  categoryList.filter({$0.name == categoryName}).first else {return []}
+//        return theone.todos?.compactMap{$0 as? ToDo} ?? []
+//    }
+    
+    func makeTodo(title:String) -> ToDo{
+        let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
+        let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
+        let todo = managedObject as! ToDo
+        todo.title = title
+        todo.done = false
+        return todo
+    }
     
 
     func getData(completion: Completion) {

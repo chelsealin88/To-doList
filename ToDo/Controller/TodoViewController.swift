@@ -31,8 +31,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
-        navigationItem.title = titleLabel
+        navigationItem.title = navigationTitle
         
         setButton()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
@@ -65,6 +64,9 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getData()
+        
+//        print( coredata.getTodoFor(categoryName: category?.name ?? "😃"))
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -121,7 +123,9 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         addTodoButton.layer.masksToBounds = false
     }
     
-    //keyboard
+
+    
+    //Setting keyboard
     @objc func keyboardWillChange(noti: Notification) {
         print("keyboard will change \(noti.name.rawValue)")
         guard let getkeyboardheigh = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { fatalError() }
@@ -148,15 +152,15 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
 extension TodoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return category?.todos?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let todos = category?.todos else { return .init()}
+        let aTodo = (todos.allObjects.map({$0 as! ToDo}))[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.attributedText = aTodo.title?.strikeThrough(bool: aTodo.done)
-        
-    
-    
+
         if aTodo.done {
             cell.textLabel?.attributedText =  strikeThroughText(aTodo.title!)
         }
