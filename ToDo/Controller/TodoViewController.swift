@@ -17,6 +17,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     
     let center : NotificationCenter = NotificationCenter.default
     var coredata = CoreData()
+    var titleLabel = String()
     var status = true
     var list : [ToDo] {
         ///todo: lazy
@@ -29,7 +30,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        //        navigationItem.title =
+        navigationItem.title = titleLabel
         
         setButton()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2

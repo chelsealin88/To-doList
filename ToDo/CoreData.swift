@@ -29,10 +29,10 @@ class CoreData {
     func saveData(title: String) {
         
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
-        let listObject = NSManagedObject(entity: entity, insertInto: managedContext)
-        let todoObject = listObject as! ToDo
-        todoObject.title = title
-        todoObject.done = false
+        let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
+        let todo = managedObject as! ToDo
+        todo.title = title
+        todo.done = false
 //        listObject.setValue(title, forKey: "title")
         
         // update all data
@@ -44,7 +44,7 @@ class CoreData {
         
         do {
             try managedContext.save()
-            list.append(todoObject)
+            list.append(todo)
         } catch let error as NSError {
             fatalError("\(error)")
         }

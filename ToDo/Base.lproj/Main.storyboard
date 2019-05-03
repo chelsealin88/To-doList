@@ -91,6 +91,9 @@
                                 <segue destination="DlJ-iT-hYU" kind="presentation" id="bBc-rx-VIk"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="5" id="DLL-fJ-Whl">
+                            <color key="tintColor" red="0.22658842800000001" green="0.51790297029999999" blue="0.74120926860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addTodoButton" destination="Zax-aN-G83" id="v24-wI-UPJ"/>

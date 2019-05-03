@@ -21,29 +21,26 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mAI-fk-OaB">
                         <rect key="frame" x="20" y="20" width="180" height="180"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="-6" translatesAutoresizingMaskIntoConstraints="NO" id="wLA-2r-avq">
-                                <rect key="frame" x="20" y="47" width="62.5" height="86.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Y5-9t-nT9">
-                                        <rect key="frame" x="0.0" y="0.0" width="27" height="71"/>
-                                        <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="50"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8t-w7-1rA">
-                                        <rect key="frame" x="0.0" y="65" width="62.5" height="21.5"/>
-                                        <fontDescription key="fontDescription" name="ArialHebrew-Bold" family="Arial Hebrew" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8t-w7-1rA">
+                                <rect key="frame" x="10" y="128.5" width="62.5" height="21.5"/>
+                                <fontDescription key="fontDescription" name="ArialHebrew-Bold" family="Arial Hebrew" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Y5-9t-nT9">
+                                <rect key="frame" x="145" y="-10" width="25" height="64"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="45"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="wLA-2r-avq" firstAttribute="centerY" secondItem="mAI-fk-OaB" secondAttribute="centerY" id="U9A-4K-tPN"/>
-                            <constraint firstItem="wLA-2r-avq" firstAttribute="leading" secondItem="mAI-fk-OaB" secondAttribute="leading" constant="20" id="gQj-WP-vSU"/>
+                            <constraint firstAttribute="trailing" secondItem="8Y5-9t-nT9" secondAttribute="trailing" constant="10" id="Ikf-Co-Pqj"/>
+                            <constraint firstAttribute="bottom" secondItem="S8t-w7-1rA" secondAttribute="bottom" constant="30" id="ZVG-nN-Z5w"/>
+                            <constraint firstItem="8Y5-9t-nT9" firstAttribute="top" secondItem="mAI-fk-OaB" secondAttribute="top" constant="-10" id="fek-u0-kkB"/>
                             <constraint firstAttribute="width" secondItem="mAI-fk-OaB" secondAttribute="height" multiplier="1:1" id="rvf-oK-jBf"/>
+                            <constraint firstItem="S8t-w7-1rA" firstAttribute="leading" secondItem="mAI-fk-OaB" secondAttribute="leading" constant="10" id="wBV-Dh-1ge"/>
                         </constraints>
                     </view>
                 </subviews>

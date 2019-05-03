@@ -16,7 +16,6 @@ class HomePageCollectionViewController: UICollectionViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     
     var coredata = CoreData()
-    var editStatus = Bool()
     var categories : [Category] {
         return coredata.categoryList
     }
@@ -49,11 +48,12 @@ class HomePageCollectionViewController: UICollectionViewController {
         guard let title = sender.title else { return }
         switch title {
         case "Edit":
-            //         edit 觸發時開始觀察
+            // edit 觸發時開始觀察
             sender.title = "Save"
             NotificationCenter.default.addObserver(self, selector: #selector(doDelete), name: .deleteCategory, object: nil)
         case "Save":
             sender.title = "Edit"
+            
             // edit -> complete 結束觀察
             break
         default:
@@ -66,21 +66,21 @@ class HomePageCollectionViewController: UICollectionViewController {
         guard let index = notification.userInfo?["tag"] as? Int else { return }
         let type = categories[index]
         
-                let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
-                let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
-                let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
-
-                    let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
-                    self.coredata.managedContext.delete(type)
-
-                    do {
-                        try managedContext.save()
-                        self.coredata.getCategoryData {
-                            self.collectionView.reloadData()
-                        }
-                    } catch let error as NSError {
-                        fatalError("\(error)")
-                    }
+        let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
+        let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
+        let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
+            
+            let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
+            self.coredata.managedContext.delete(type)
+            
+            do {
+                try managedContext.save()
+                self.coredata.getCategoryData {
+                    self.collectionView.reloadData()
+                }
+            } catch let error as NSError {
+                fatalError("\(error)")
+            }
         }
         alert.addAction(cancleAction)
         alert.addAction(deletetAction)
@@ -124,8 +124,8 @@ class HomePageCollectionViewController: UICollectionViewController {
         
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! HomePageCollectionViewCell
-        let type = categories[indexPath.row]
-        cell.categoryName.text = type.name
+        let aCategory = categories[indexPath.row]
+        cell.categoryName.text = aCategory.name
         cell.view.layer.cornerRadius = 10
         cell.notificationAddObserver()
         cell.tag = indexPath.item
@@ -135,6 +135,10 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        var navigationtitle = String()
+        let aCategory = categories[indexPath.row]
+        navigationtitle = aCategory.name!
+        
         if indexPath.item == categories.count {
             
             alertWithTextField()
@@ -143,6 +147,8 @@ class HomePageCollectionViewController: UICollectionViewController {
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "TodoViewController") as! TodoViewController
             self.navigationController?.pushViewController(vc, animated: true)
+            vc.titleLabel = navigationtitle
+        
             
         }
         
@@ -190,13 +196,15 @@ class HomePageCollectionViewController: UICollectionViewController {
         coredata.saveCategory(category: categoryName)
     }
     
+    //Add category text field
     func alertWithTextField() {
+        
         let alert = UIAlertController(title: "Create a new category", message: "", preferredStyle: .alert)
         let save = UIAlertAction(title: "OK", style: .default) { (alertAction) in
             let textField = alert.textFields![0] as UITextField
             guard let categoryName = textField.text else { return }
             if categoryName != "" {
-                //todo : save data
+                //save data
                 self.save(categoryName: categoryName)
                 self.collectionView.reloadData()
             }
