@@ -10,19 +10,21 @@ import UIKit
 
 class TodoViewController: UIViewController, UITextFieldDelegate {
     
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addTodoButton: UIButton!
     @IBOutlet weak var addtextField: UITextField!
     
     let center : NotificationCenter = NotificationCenter.default
     var coredata = CoreData()
-    var titleLabel = String()
+    var tasknumber = Int()
+    var navigationTitle = String()
     var status = true
     var list : [ToDo] {
         ///todo: lazy
         return coredata.list//.map{$0.atodo}
     }
+    
+    var category: Category?
 
     
     override func viewDidLoad() {
@@ -90,7 +92,11 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     
     // Save Core Data
     func save(title: String) {
-        coredata.saveData(title: title)
+        let todo = coredata.makeTodo(title: title)
+        category?.addToTodos(todo)
+        try! coredata.save()
+        
+//        coredata.saveData(title: title)
     }
     
     
@@ -147,9 +153,6 @@ extension TodoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let aTodo = list[indexPath.row]
-        
-//        cell.textLabel?.attributedText = aTodo.title.strikeThrough(bool: aTodo.done)
         cell.textLabel?.attributedText = aTodo.title?.strikeThrough(bool: aTodo.done)
         
     
@@ -227,7 +230,7 @@ extension TodoViewController: UITableViewDelegate {
                         try managedContext.save()
                         self.getData()
                     } catch let error as NSError {
-                        print("Could not delete \(error), \(error.userInfo)")
+                        fatalError("Error:\(error)")
                     }
                     completion(true)
                 }

@@ -52,9 +52,8 @@ class HomePageCollectionViewController: UICollectionViewController {
             sender.title = "Save"
             NotificationCenter.default.addObserver(self, selector: #selector(doDelete), name: .deleteCategory, object: nil)
         case "Save":
-            sender.title = "Edit"
-            
             // edit -> complete 結束觀察
+            sender.title = "Edit"
             break
         default:
             fatalError()
@@ -64,14 +63,14 @@ class HomePageCollectionViewController: UICollectionViewController {
     // Delete Category
     @objc func doDelete(_ notification: Notification) {
         guard let index = notification.userInfo?["tag"] as? Int else { return }
-        let type = categories[index]
+        let aCategory = categories[index]
         
         let alert = UIAlertController(title: "Are you sure to delete?", message: "", preferredStyle: .alert)
         let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
         let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
             
             let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
-            self.coredata.managedContext.delete(type)
+            self.coredata.managedContext.delete(aCategory)
             
             do {
                 try managedContext.save()
@@ -135,24 +134,27 @@ class HomePageCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        var navigationtitle = String()
-        let aCategory = categories[indexPath.row]
-        navigationtitle = aCategory.name!
         
         if indexPath.item == categories.count {
             
             alertWithTextField()
             
         } else {
+            var navigationtitle = String()
+            let aCategory = categories[indexPath.row]
+            navigationtitle = aCategory.name!
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "TodoViewController") as! TodoViewController
             self.navigationController?.pushViewController(vc, animated: true)
-            vc.titleLabel = navigationtitle
-        
-            
+            vc.navigationTitle = navigationtitle
+            vc.category = aCategory
         }
         
     }
+    
+//    func pass(data: ToDo) {
+//        performSegue(withIdentifier: "goTodo", sender: data)
+//    }
     
     // MARK: UICollectionViewDelegate
     
