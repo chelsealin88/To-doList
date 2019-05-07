@@ -20,7 +20,6 @@ class HomePageCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    
 
     
     func notificationAddObserver() {

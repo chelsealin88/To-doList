@@ -13,9 +13,12 @@ private let reuseIdentifier = "Cell"
 
 class HomePageCollectionViewController: UICollectionViewController {
     
+    
     @IBOutlet weak var editButton: UIBarButtonItem!
     
+    var tasknumber = Int()
     var coredata = CoreData()
+    var category: Category?
     var categories : [Category] {
         return coredata.categoryList
     }
@@ -25,6 +28,7 @@ class HomePageCollectionViewController: UICollectionViewController {
         
         registerNib(nibname: "CategoryCell")
         registerNib(nibname: "CreateCell")
+    
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -120,6 +124,16 @@ class HomePageCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! HomePageCollectionViewCell
         let aCategory = categories[indexPath.row]
         cell.categoryName.text = aCategory.name
+        
+//        guard let todos = category?.todolist.filter({ (todo) -> Bool in
+//            return !todo.done
+//        }).count else { return cell }
+        guard let todos = aCategory.todos?.allObjects.filter({ (todo) -> Bool in
+            return !(todo as! ToDo).done
+        }).count else { return  cell }
+        tasknumber = todos
+        cell.tasksNumber.text = "\(tasknumber) tasks"
+        
         cell.view.layer.cornerRadius = 10
         cell.notificationAddObserver()
         cell.tag = indexPath.item
@@ -137,11 +151,12 @@ class HomePageCollectionViewController: UICollectionViewController {
             var navigationtitle = String()
             let aCategory = categories[indexPath.row]
             navigationtitle = aCategory.name!
-            
+        
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "TodoViewController") as! TodoViewController
             self.navigationController?.pushViewController(vc, animated: true)
             vc.navigationTitle = navigationtitle
             vc.category = aCategory
+            
         }
         
     }
@@ -176,6 +191,7 @@ class HomePageCollectionViewController: UICollectionViewController {
      
      }
      */
+
     
     func registerNib(nibname: String) {
         let nib = UINib(nibName: nibname, bundle: .main)

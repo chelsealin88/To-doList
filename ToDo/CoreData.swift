@@ -128,6 +128,15 @@ extension NSManagedObject {
     }
 }
 
+extension Category {
+    
+    var todolist : [ToDo] {
+        
+        return todos?.allObjects.map({$0 as! ToDo}) ?? []
+        
+    }
+    
+}
 
 
 // View Model

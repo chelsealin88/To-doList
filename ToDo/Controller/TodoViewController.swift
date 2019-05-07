@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class TodoViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var tableView: UITableView!
@@ -25,13 +26,12 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         return coredata.list//.map{$0.atodo}
     }
     
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        setButton()
+        setupButton()
         setupBarItem()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
         addtextField.clipsToBounds = true
@@ -65,7 +65,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getData()
-//        print(coredata.getTodoFor(categoryName: category?.name ?? "😃"))
+    //        print(coredata.getTodoFor(categoryName: category?.name ?? "😃"))
         
     }
 
@@ -120,10 +120,19 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     
     func setupBarItem() {
         
-        guard let todos = category?.todos else { return }
-        tasknumber = todos.allObjects.count
+        //title
         navigationItem.title = navigationTitle
+        // taks number
+        guard let todos = category?.todolist.filter({ (todo) -> Bool in
+            return !todo.done
+        }).count else { return }
+//        guard let todos = category?.todos else { return }
+        tasknumber = todos
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(tasknumber)", style: .plain, target: self, action: #selector(addTapped))
+        
+//        let fontSize : CGFloat = 20
+//        let Font : UIFont
+//        navigationItem.rightBarButtonItem?.setTitleTextAttributes(<#T##attributes: [NSAttributedString.Key : Any]?##[NSAttributedString.Key : Any]?#>, for: <#T##UIControl.State#>)
     }
     
     
@@ -132,7 +141,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func setButton() {
+    func setupButton() {
         addTodoButton.layer.cornerRadius = addTodoButton.frame.size.width / 2
         addTodoButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         addTodoButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
@@ -175,7 +184,8 @@ extension TodoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let todos = category?.todos else { return .init() }
-        let aTodo = (todos.allObjects.map({$0 as! ToDo}))[indexPath.row]
+        guard let aTodo = category?.todolist[indexPath.row] else { return .init() }
+//        let aTodo = (todos.allObjects.map({$0 as! ToDo}))[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.attributedText = aTodo.title?.strikeThrough(bool: aTodo.done)
 
