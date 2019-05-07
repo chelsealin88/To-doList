@@ -32,7 +32,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         setupButton()
-        setupBarItem()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
         addtextField.clipsToBounds = true
         //change attribute name
@@ -65,6 +64,8 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getData()
+        setupBarItem()
+
     //        print(coredata.getTodoFor(categoryName: category?.name ?? "😃"))
         
     }
@@ -119,20 +120,19 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupBarItem() {
-        
         //title
         navigationItem.title = navigationTitle
+        
         // taks number
         guard let todos = category?.todolist.filter({ (todo) -> Bool in
             return !todo.done
         }).count else { return }
-//        guard let todos = category?.todos else { return }
         tasknumber = todos
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(tasknumber)", style: .plain, target: self, action: #selector(addTapped))
+
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor(red: 55, green: 118, blue: 212), NSAttributedString.Key.font: UIFont(name: "AvenirNext-Bold", size: 40)!], for: UIControl.State.normal)
         
-//        let fontSize : CGFloat = 20
-//        let Font : UIFont
-//        navigationItem.rightBarButtonItem?.setTitleTextAttributes(<#T##attributes: [NSAttributedString.Key : Any]?##[NSAttributedString.Key : Any]?#>, for: <#T##UIControl.State#>)
+
     }
     
     
@@ -247,7 +247,14 @@ extension TodoViewController: UITableViewDelegate {
     // Delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailTableViewController") as! DetailTableViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }
+        
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
             
             if self.status == true {
                 
@@ -274,8 +281,9 @@ extension TodoViewController: UITableViewDelegate {
             
         }
         
-        action.backgroundColor = .init(red: 121/235, green: 121/235, blue: 130/235, alpha: 1)
-        return UISwipeActionsConfiguration(actions: [action])
+        deleteAction.backgroundColor = .init(red: 121/235, green: 121/235, blue: 130/235, alpha: 1)
+        editAction.backgroundColor = UIColor(red: 232, green: 116, blue: 118)
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         
         
     }
