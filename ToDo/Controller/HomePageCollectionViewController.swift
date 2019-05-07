@@ -86,9 +86,6 @@ class HomePageCollectionViewController: UICollectionViewController {
         self.present(alert, animated: true, completion: nil)
         
     }
-    
-    
-    
     /*
      // MARK: - Navigation
      
@@ -120,8 +117,6 @@ class HomePageCollectionViewController: UICollectionViewController {
             return createcell
         }
         
-        
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! HomePageCollectionViewCell
         let aCategory = categories[indexPath.row]
         cell.categoryName.text = aCategory.name
@@ -133,7 +128,6 @@ class HomePageCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         
         if indexPath.item == categories.count {
             
@@ -151,11 +145,6 @@ class HomePageCollectionViewController: UICollectionViewController {
         }
         
     }
-    
-//    func pass(data: ToDo) {
-//        performSegue(withIdentifier: "goTodo", sender: data)
-//    }
-    
     // MARK: UICollectionViewDelegate
     
     
@@ -250,7 +239,6 @@ extension HomePageCollectionViewController : UICollectionViewDelegateFlowLayout 
 extension Notification.Name {
     
     static let didEditCategory = Notification.Name("didEditCategory")
-    static let didCompleteCategory = Notification.Name("didCompleteCategory")
     static let deleteCategory = Notification.Name("deleteCategory")
     
 }

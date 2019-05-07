@@ -44,7 +44,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.70998690077736082" green="0.82115782029629225" blue="0.86768321700507611" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.84932848859999999" green="0.84932848859999999" blue="0.84932848859999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="oRP-Cz-g5Z" firstAttribute="centerY" secondItem="KGq-fE-h9t" secondAttribute="centerY" id="1XX-rh-0kH"/>
                             <constraint firstAttribute="trailing" secondItem="oRP-Cz-g5Z" secondAttribute="trailing" constant="20" id="OdR-q4-TuV"/>
@@ -81,7 +81,7 @@
                 <outlet property="tasksNumber" destination="k1T-TJ-FUM" id="KwQ-yC-Hlp"/>
                 <outlet property="view" destination="KGq-fE-h9t" id="9fs-vD-igK"/>
             </connections>
-            <point key="canvasLocation" x="-215.625" y="98.75"/>
+            <point key="canvasLocation" x="-293" y="99"/>
         </collectionViewCell>
     </objects>
     <resources>

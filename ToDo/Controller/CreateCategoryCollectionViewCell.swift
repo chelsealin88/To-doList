@@ -18,4 +18,5 @@ class CreateCategoryCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
+    
 }

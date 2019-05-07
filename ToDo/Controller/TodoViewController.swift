@@ -19,21 +19,20 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     var tasknumber = Int()
     var navigationTitle = String()
     var status = true
+    var category: Category?
     var list : [ToDo] {
         ///todo: lazy
         return coredata.list//.map{$0.atodo}
     }
     
-    var category: Category?
-
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        navigationItem.title = navigationTitle
-        
         setButton()
+        setupBarItem()
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
         addtextField.clipsToBounds = true
         //change attribute name
@@ -41,8 +40,9 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
             $0.renameAttribute(before: "enter", after: "title")
         }
         
+      
+
         //Listion to keyboard
-        
         center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -60,17 +60,23 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    
     // get data from your persistent store
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getData()
-        
-//        print( coredata.getTodoFor(categoryName: category?.name ?? "😃"))
+//        print(coredata.getTodoFor(categoryName: category?.name ?? "😃"))
         
     }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    @IBAction func taskBaritem(_ sender: UIBarButtonItem) {
+        
+        
     }
     
     @IBAction func addTodoButton(_ sender: Any) {
@@ -97,8 +103,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         let todo = coredata.makeTodo(title: title)
         category?.addToTodos(todo)
         try! coredata.save()
-        
-//        coredata.saveData(title: title)
+    
     }
     
     
@@ -113,6 +118,19 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         return attributeString
     }
     
+    func setupBarItem() {
+        
+        guard let todos = category?.todos else { return }
+        tasknumber = todos.allObjects.count
+        navigationItem.title = navigationTitle
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(tasknumber)", style: .plain, target: self, action: #selector(addTapped))
+    }
+    
+    
+    @objc func addTapped() {
+        
+    }
+    
     
     func setButton() {
         addTodoButton.layer.cornerRadius = addTodoButton.frame.size.width / 2
@@ -121,10 +139,10 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         addTodoButton.layer.shadowOpacity = 1.0
         addTodoButton.layer.shadowRadius = 0.0
         addTodoButton.layer.masksToBounds = false
+    
+        
     }
-    
 
-    
     //Setting keyboard
     @objc func keyboardWillChange(noti: Notification) {
         print("keyboard will change \(noti.name.rawValue)")
@@ -156,7 +174,7 @@ extension TodoViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let todos = category?.todos else { return .init()}
+        guard let todos = category?.todos else { return .init() }
         let aTodo = (todos.allObjects.map({$0 as! ToDo}))[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.attributedText = aTodo.title?.strikeThrough(bool: aTodo.done)

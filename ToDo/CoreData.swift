@@ -34,8 +34,6 @@ class CoreData {
         let todo = managedObject as! ToDo
         todo.title = title
         todo.done = false
-//        listObject.setValue(title, forKey: "title")
-        
         // update all data
 //        for index in list {
 //            if index.value(forKeyPath: "done") as? Bool == nil {
@@ -51,6 +49,7 @@ class CoreData {
         }
         
     }
+    
     func save()throws{
            try managedContext.save()
     }
@@ -67,7 +66,7 @@ class CoreData {
             try managedContext.save()
             categoryList.append(categoryObject)
         } catch let error as NSError {
-            fatalError("\(error)")
+            fatalError("Error:\(error)")
         }
     }
 
@@ -82,19 +81,15 @@ class CoreData {
         do {
             categoryList = try managedContext.fetch(fetchRequest) as! [Category]
         } catch let error as NSError {
-            fatalError("\(error)")
+            fatalError("Error:\(error)")
         }
         
         completion()
-        
     }
 
-//    func getTodoFor(categoryName:String)->[ToDo]{
-//        guard let theone =  categoryList.filter({$0.name == categoryName}).first else {return []}
-//        return theone.todos?.compactMap{$0 as? ToDo} ?? []
-//    }
-    
-    func makeTodo(title:String) -> ToDo{
+    //Make Todo
+    func makeTodo(title:String) -> ToDo {
+        
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
         let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
         let todo = managedObject as! ToDo
@@ -122,10 +117,8 @@ class CoreData {
 extension NSManagedObject {
 
 //    var atodo: Atodo {
-//
 //        let title: String = value(forKey: "title") as! String
 //        let done: Bool = value(forKey: "done") as! Bool
-//
 //        return Atodo.init(title: title, done: done)
 //    }
     
@@ -139,11 +132,8 @@ extension NSManagedObject {
 
 // View Model
 //struct Atodo {
-//
 //    var title: String
 //    var done: Bool
-//
-//
 //}
 
 //todo : 把CoreData當Model來要資料

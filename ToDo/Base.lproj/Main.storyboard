@@ -116,16 +116,14 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="TO DO" id="Zch-VH-Imv">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="fEv-zg-ccG">
-                            <color key="tintColor" red="0.22658842800000001" green="0.51790297029999999" blue="0.74120926860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="rxa-mh-Fvt">
                             <connections>
-                                <action selector="editButton:" destination="pVJ-ep-iBu" id="U7r-4p-Zpp"/>
+                                <action selector="editButton:" destination="pVJ-ep-iBu" id="1WQ-E5-ea4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="editButton" destination="fEv-zg-ccG" id="mVX-jI-ryY"/>
-                        <segue destination="kiB-4H-GsY" kind="presentation" identifier="goTodo" id="wtz-C8-TLM"/>
+                        <outlet property="editButton" destination="rxa-mh-Fvt" id="vaF-DD-dOu"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDZ-5B-g4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
