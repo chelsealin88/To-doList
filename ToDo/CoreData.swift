@@ -129,9 +129,19 @@ extension Category {
         
         return todos?.allObjects.map({$0 as! ToDo}).sorted{
             $0.id > $1.id
-            } ?? []
+            } ?? [] //return 空陣列
         
     }
+    
+    var categoryCount : Int {
+        
+        return todolist.filter({ (todo) -> Bool in
+            !todo.done
+        }).count 
+        
+    }
+    
+   
     
 }
 

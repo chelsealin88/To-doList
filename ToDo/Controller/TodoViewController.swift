@@ -101,10 +101,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     // Save Core Data
     func save(title: String) {
         
-        guard let todos = category?.todolist.filter({ (todo) -> Bool in
-            return !todo.done
-        }).count else { return }
-        
+        guard let todos = category?.categoryCount else { return }
         let todo = coredata.makeTodo(title: title)
         todo.id = Int64(category!.todolist.count)
         category?.addToTodos(todo)
@@ -130,9 +127,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = navigationTitle
         
         // taks number
-        guard let todos = category?.todolist.filter({ (todo) -> Bool in
-            return !todo.done
-        }).count else { return }
+        guard let todos = category?.categoryCount else { return }
         tasknumber = todos
         barButton = UIBarButtonItem(title: "\(tasknumber)", style: .plain, target: self, action: #selector(addTapped))
         navigationItem.rightBarButtonItem = barButton
@@ -272,8 +267,15 @@ extension TodoViewController: UITableViewDelegate {
                 let cancleAction = UIAlertAction(title: "Cancle", style: .default, handler: nil)
                 let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
                     
+                    guard let atodo = self.category?.todolist[indexPath.row] else { return }
                     let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
-                    self.coredata.managedContext.delete(self.category!.todolist[indexPath.row])
+                    self.coredata.managedContext.delete(atodo)
+                    
+                    guard let todos = self.category?.categoryCount else { return }
+                    
+                    if !atodo.done {
+                        self.barButton?.title = "\(todos - 1)"
+                    }
                     
                     do {
                         try managedContext.save()
