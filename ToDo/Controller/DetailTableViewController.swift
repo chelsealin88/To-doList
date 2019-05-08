@@ -25,7 +25,7 @@ class DetailTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         registerNib(nibname: "TitleCell")
-        
+        registerNib(nibname: "DetailCell")
     }
     
     // MARK: - Table view data source
@@ -58,21 +58,23 @@ class DetailTableViewController: UITableViewController {
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! DetailTableViewCell
+    let detailcell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! DetailTableViewCell
         
         if indexPath.section == 0 {
             cell.titleTextfield.text = todoTitle
+             return cell
+        } else {
+            detailcell.detailTextview.text = "12345567788 \n 123445667898"
+            return detailcell
         }
-    
 
      // Configure the cell...
      
-     return cell
      }
     
     @IBAction func editButton(_ sender: Any) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditDetailTableViewController") as! EditDetailTableViewController
-        self.navigationController?.pushViewController(vc, animated: true)
+       
     }
 
     

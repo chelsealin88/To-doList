@@ -12,6 +12,7 @@ class DetailTableViewCell: UITableViewCell {
     
 
     @IBOutlet weak var titleTextfield: UITextField!
+    @IBOutlet weak var detailTextview: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
