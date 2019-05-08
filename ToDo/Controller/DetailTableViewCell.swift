@@ -9,6 +9,8 @@
 import UIKit
 
 class DetailTableViewCell: UITableViewCell {
+    
+    var textField : UITextField?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,5 +22,10 @@ class DetailTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+//    func setupTextField() {
+//        vie
+//    }
 
+    
 }

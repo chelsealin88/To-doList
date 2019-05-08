@@ -21,10 +21,11 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     var navigationTitle = String()
     var status = true
     var category: Category?
-    var list : [ToDo] {
-        ///todo: lazy
-        return coredata.list//.map{$0.atodo}
-    }
+    var list : [ToDo] = []
+//    {
+//        ///todo: lazy
+//        return coredata.list//.map{$0.atodo}
+//    }
     var barButton : UIBarButtonItem?
     
     override func viewDidLoad() {
@@ -39,7 +40,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         coredata.list.forEach{
             $0.renameAttribute(before: "enter", after: "title")
             
-        
         }
         
       
@@ -51,6 +51,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         
         
         addtextField.delegate = self
+        list = category?.todolist ?? []
     }
     
     // Stop to listen keyboard notification
@@ -66,7 +67,8 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     // get data from your persistent store
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getData()
+//        getData()
+        
         setupBarItem()
 
     //        print(coredata.getTodoFor(categoryName: category?.name ?? "😃"))
@@ -103,8 +105,11 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         
         guard let todos = category?.categoryCount else { return }
         let todo = coredata.makeTodo(title: title)
-        todo.id = Int64(category!.todolist.count)
+        let lastone = category?.todolist.first?.id ?? -1
+        todo.id = Int64(lastone + 1)
+        
         category?.addToTodos(todo)
+        list.append(todo)
         barButton?.title = "\(todos + 1)"
         try! coredata.save()
     
@@ -179,7 +184,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
 extension TodoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return category?.todos?.count ?? 0
+        return  list.count// category?.todolist.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -187,7 +192,6 @@ extension TodoViewController: UITableViewDataSource {
         guard let aTodo = category?.todolist[indexPath.row] else { return .init() }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.attributedText = aTodo.title?.strikeThrough(bool: aTodo.done)
-
         if aTodo.done {
             cell.textLabel?.attributedText =  strikeThroughText(aTodo.title!)
         }
@@ -248,13 +252,13 @@ extension TodoViewController: UITableViewDelegate {
         
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
             
-//            var todoTitle = String()
-//            let atodo = self.list[indexPath.row]
-//            todoTitle = atodo.title!
+            var todoTitle = String()
+            let atodo = self.list[indexPath.row]
+            todoTitle = atodo.title!
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailTableViewController") as! DetailTableViewController
+            vc.todoTitle = todoTitle
             self.navigationController?.pushViewController(vc, animated: true)
-//            vc.todoTitle = todoTitle
         
             
         }
@@ -277,6 +281,7 @@ extension TodoViewController: UITableViewDelegate {
                         self.barButton?.title = "\(todos - 1)"
                     }
                     
+                    self.list.remove(at: indexPath.row)
                     do {
                         try managedContext.save()
                         self.getData()

@@ -33,7 +33,7 @@ class DetailTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 1
         
     }
     
@@ -56,7 +56,7 @@ class DetailTableViewController: UITableViewController {
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailTableViewCell
         
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             cell.textLabel?.text = todoTitle
         }
     
@@ -65,9 +65,6 @@ class DetailTableViewController: UITableViewController {
      
      return cell
      }
-    
-    
-    
     
     @IBAction func editButton(_ sender: Any) {
         
