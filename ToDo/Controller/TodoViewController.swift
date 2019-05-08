@@ -100,9 +100,15 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     
     // Save Core Data
     func save(title: String) {
+        
+        guard let todos = category?.todolist.filter({ (todo) -> Bool in
+            return !todo.done
+        }).count else { return }
+        
         let todo = coredata.makeTodo(title: title)
         todo.id = Int64(category!.todolist.count)
         category?.addToTodos(todo)
+        barButton?.title = "\(todos + 1)"
         try! coredata.save()
     
     }
@@ -124,7 +130,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = navigationTitle
         
         // taks number
-        
         guard let todos = category?.todolist.filter({ (todo) -> Bool in
             return !todo.done
         }).count else { return }
