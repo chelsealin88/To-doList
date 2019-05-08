@@ -23,6 +23,9 @@ class DetailTableViewController: UITableViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        registerNib(nibname: "TitleCell")
+        
     }
     
     // MARK: - Table view data source
@@ -54,10 +57,10 @@ class DetailTableViewController: UITableViewController {
     
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DetailTableViewCell
+     let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! DetailTableViewCell
         
         if indexPath.section == 0 {
-            cell.textLabel?.text = todoTitle
+            cell.titleTextfield.text = todoTitle
         }
     
 
@@ -118,4 +121,9 @@ class DetailTableViewController: UITableViewController {
      }
      */
     
+    func registerNib(nibname: String) {
+        let nib = UINib(nibName: nibname, bundle: .main)
+        self.tableView.register(nib, forCellReuseIdentifier: nibname)
     }
+    
+}

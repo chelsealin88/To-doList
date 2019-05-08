@@ -10,8 +10,9 @@ import UIKit
 
 class DetailTableViewCell: UITableViewCell {
     
-    var textField : UITextField?
 
+    @IBOutlet weak var titleTextfield: UITextField!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,9 +24,6 @@ class DetailTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-//    func setupTextField() {
-//        vie
-//    }
 
     
 }
