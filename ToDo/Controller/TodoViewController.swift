@@ -25,6 +25,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         ///todo: lazy
         return coredata.list//.map{$0.atodo}
     }
+    var barButton : UIBarButtonItem?
     
     override func viewDidLoad() {
         
@@ -37,6 +38,8 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         //change attribute name
         coredata.list.forEach{
             $0.renameAttribute(before: "enter", after: "title")
+            
+        
         }
         
       
@@ -74,11 +77,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    
-    @IBAction func taskBaritem(_ sender: UIBarButtonItem) {
-        
-        
-    }
+
     
     @IBAction func addTodoButton(_ sender: Any) {
         
@@ -102,6 +101,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     // Save Core Data
     func save(title: String) {
         let todo = coredata.makeTodo(title: title)
+        todo.id = Int64(category!.todolist.count)
         category?.addToTodos(todo)
         try! coredata.save()
     
@@ -124,18 +124,20 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         navigationItem.title = navigationTitle
         
         // taks number
+        
         guard let todos = category?.todolist.filter({ (todo) -> Bool in
             return !todo.done
         }).count else { return }
         tasknumber = todos
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "\(tasknumber)", style: .plain, target: self, action: #selector(addTapped))
+        barButton = UIBarButtonItem(title: "\(tasknumber)", style: .plain, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItem = barButton
 
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor(red: 55, green: 118, blue: 212), NSAttributedString.Key.font: UIFont(name: "AvenirNext-Bold", size: 40)!], for: UIControl.State.normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:UIColor.darkGray, NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 32)!], for: UIControl.State.normal)
         
 
     }
     
-    
+    /// todo: task number action
     @objc func addTapped() {
         
     }
@@ -148,8 +150,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         addTodoButton.layer.shadowOpacity = 1.0
         addTodoButton.layer.shadowRadius = 0.0
         addTodoButton.layer.masksToBounds = false
-    
-        
     }
 
     //Setting keyboard
@@ -183,9 +183,8 @@ extension TodoViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let todos = category?.todos else { return .init() }
+//        guard let todos = category?.todos else { return .init() }
         guard let aTodo = category?.todolist[indexPath.row] else { return .init() }
-//        let aTodo = (todos.allObjects.map({$0 as! ToDo}))[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.attributedText = aTodo.title?.strikeThrough(bool: aTodo.done)
 
@@ -222,7 +221,7 @@ extension TodoViewController: UITableViewDelegate {
                 completion(true) 
             })
             
-            doneAction.backgroundColor = .init(red: 58/235, green: 132/235, blue: 189/235, alpha: 1)
+            doneAction.backgroundColor = UIColor(red: 58, green: 132, blue: 189)
             return UISwipeActionsConfiguration(actions: [doneAction])
             
         } else {
@@ -237,7 +236,7 @@ extension TodoViewController: UITableViewDelegate {
                 
             })
             
-            undoAction.backgroundColor = .init(red: 181/255, green: 204/255, blue: 232/255, alpha: 1)
+            undoAction.backgroundColor = UIColor(red: 181, green: 204, blue: 232)
             return UISwipeActionsConfiguration(actions: [undoAction])
         }
         
@@ -249,8 +248,14 @@ extension TodoViewController: UITableViewDelegate {
         
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
             
+//            var todoTitle = String()
+//            let atodo = self.list[indexPath.row]
+//            todoTitle = atodo.title!
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailTableViewController") as! DetailTableViewController
             self.navigationController?.pushViewController(vc, animated: true)
+//            vc.todoTitle = todoTitle
+        
             
         }
         
@@ -263,7 +268,7 @@ extension TodoViewController: UITableViewDelegate {
                 let deletetAction = UIAlertAction(title: "Delete", style: .default) { (alert) in
                     
                     let managedContext = self.coredata.appDelegate.persistentContainer.viewContext
-                    self.coredata.managedContext.delete(self.coredata.list[indexPath.row])
+                    self.coredata.managedContext.delete(self.category!.todolist[indexPath.row])
                     
                     do {
                         try managedContext.save()

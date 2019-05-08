@@ -133,7 +133,6 @@ class HomePageCollectionViewController: UICollectionViewController {
         }).count else { return  cell }
         tasknumber = todos
         cell.tasksNumber.text = "\(tasknumber) tasks"
-        
         cell.view.layer.cornerRadius = 10
         cell.notificationAddObserver()
         cell.tag = indexPath.item

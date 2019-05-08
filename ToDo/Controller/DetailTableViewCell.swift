@@ -1,14 +1,14 @@
 //
-//  ListTableViewCell.swift
+//  DetailTableViewCell.swift
 //  ToDo
 //
-//  Created by Chelsea Lin on 2019/4/15.
+//  Created by Chelsea Lin on 2019/5/8.
 //  Copyright © 2019 chelsea lin. All rights reserved.
 //
 
 import UIKit
 
-class ListTableViewCell: UITableViewCell {
+class DetailTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

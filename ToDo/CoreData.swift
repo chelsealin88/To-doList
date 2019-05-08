@@ -34,12 +34,7 @@ class CoreData {
         let todo = managedObject as! ToDo
         todo.title = title
         todo.done = false
-        // update all data
-//        for index in list {
-//            if index.value(forKeyPath: "done") as? Bool == nil {
-//                index.setValue(false, forKey: "done")
-//            }
-//        }
+//        todo.id = Int64(list.count)
         
         do {
             try managedContext.save()
@@ -106,7 +101,7 @@ class CoreData {
         do {
             list = try managedContext.fetch(fetchRequest) as! [ToDo]
         } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
+            fatalError("Error:\(error)")
         }
         
         completion()
@@ -132,7 +127,9 @@ extension Category {
     
     var todolist : [ToDo] {
         
-        return todos?.allObjects.map({$0 as! ToDo}) ?? []
+        return todos?.allObjects.map({$0 as! ToDo}).sorted{
+            $0.id > $1.id
+            } ?? []
         
     }
     

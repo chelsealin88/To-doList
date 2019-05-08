@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5E089D1822815A5E00B6A95F /* DetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E089D1722815A5E00B6A95F /* DetailTableViewController.swift */; };
 		5E089D1A22815A6A00B6A95F /* EditDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E089D1922815A6A00B6A95F /* EditDetailTableViewController.swift */; };
+		5E42350B22827057006BB22D /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E42350A22827057006BB22D /* DetailTableViewCell.swift */; };
 		5E5BE300226702FE0091971C /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5BE2FF226702FE0091971C /* CoreData.swift */; };
 		5E616718226FF41E00C8C273 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E616717226FF41E00C8C273 /* Category.swift */; };
 		5E61671E227001FC00C8C273 /* CreateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E61671D227001FC00C8C273 /* CreateCell.xib */; };
@@ -23,13 +24,13 @@
 		5EEE8E522264554700AE58C6 /* ToDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5EEE8E502264554700AE58C6 /* ToDo.xcdatamodeld */; };
 		5EEE8E542264554800AE58C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EEE8E532264554800AE58C6 /* Assets.xcassets */; };
 		5EEE8E572264554800AE58C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EEE8E552264554800AE58C6 /* LaunchScreen.storyboard */; };
-		5EEE8E6022645E1100AE58C6 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEE8E5F22645E1100AE58C6 /* ListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5E089D1722815A5E00B6A95F /* DetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewController.swift; sourceTree = "<group>"; };
 		5E089D1922815A6A00B6A95F /* EditDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDetailTableViewController.swift; sourceTree = "<group>"; };
 		5E34CDED2268547A00D2C7A6 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ToDo/MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		5E42350A22827057006BB22D /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		5E5BE2FF226702FE0091971C /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		5E616717226FF41E00C8C273 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		5E61671D227001FC00C8C273 /* CreateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CreateCell.xib; path = ../../CreateCell.xib; sourceTree = "<group>"; };
@@ -46,7 +47,6 @@
 		5EEE8E532264554800AE58C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5EEE8E562264554800AE58C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5EEE8E582264554800AE58C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5EEE8E5F22645E1100AE58C6 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +75,7 @@
 				5E61671D227001FC00C8C273 /* CreateCell.xib */,
 				5E917330226F0EF10066015A /* HomePageCollectionViewCell.swift */,
 				5E61671F227296A100C8C273 /* CreateCategoryCollectionViewCell.swift */,
+				5E42350A22827057006BB22D /* DetailTableViewCell.swift */,
 			);
 			name = View;
 			path = Controller;
@@ -130,7 +131,6 @@
 			children = (
 				5E5BE2FF226702FE0091971C /* CoreData.swift */,
 				5E616717226FF41E00C8C273 /* Category.swift */,
-				5EEE8E5F22645E1100AE58C6 /* ListTableViewCell.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -213,8 +213,8 @@
 				5E089D1A22815A6A00B6A95F /* EditDetailTableViewController.swift in Sources */,
 				5EEE8E4C2264554700AE58C6 /* TodoViewController.swift in Sources */,
 				5E917332226F0EF10066015A /* HomePageCollectionViewCell.swift in Sources */,
-				5EEE8E6022645E1100AE58C6 /* ListTableViewCell.swift in Sources */,
 				5E616720227296A100C8C273 /* CreateCategoryCollectionViewCell.swift in Sources */,
+				5E42350B22827057006BB22D /* DetailTableViewCell.swift in Sources */,
 				5EEE8E522264554700AE58C6 /* ToDo.xcdatamodeld in Sources */,
 				5E089D1822815A5E00B6A95F /* DetailTableViewController.swift in Sources */,
 				5EEE8E4A2264554700AE58C6 /* AppDelegate.swift in Sources */,
