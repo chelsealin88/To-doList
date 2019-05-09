@@ -18,24 +18,29 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
         super.viewDidLoad()
         
         tableView.separatorStyle = .none
-        tableView.estimatedRowHeight = 60
-        tableView.rowHeight = UITableView.automaticDimension
-        
+//        tableView.estimatedRowHeight = 60
+//        tableView.rowHeight = UITableView.automaticDimension
+       
         registerNib(nibname: "TitleCell")
         registerNib(nibname: "DetailCell")
         
         //Listion to Keyboard
-//        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
+        
+    }
+    
+    //Stop to listion keyboard
+    /// todo: remove observer
+    deinit {
+        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
-//        deinit {
-//
-//        }
     }
     
     weak var listvc: TodoViewController?
-
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -62,28 +67,25 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
         return 45
     }
     
+    
+    lazy var height : CGFloat! = view.frame.height / 5
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if indexPath.section == 1 {
-            return UITableView.automaticDimension
+            return height
         }
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
+
     
-    func textViewDidChange(_ textView: UITextView) {
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
-    
-    
-    
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! DetailTableViewCell
             cell.titleTextfield?.text = todo?.title
-             return cell
+            return cell
             
         } else {
             let detailcell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! DetailTableViewCell
@@ -92,15 +94,16 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
             self.textview = detailcell.detailTextview
             return detailcell
         }
-
-     // Configure the cell...
-     
-     }
+        
+        // Configure the cell...
+        
+    }
     
     var textview : UITextView?
     
     //Setting keyboard
     @objc func keyboardWillChange(notification: Notification) {
+        
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
@@ -110,19 +113,14 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
         } else {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
-        
+        height = 100
         tableView.scrollIndicatorInsets = tableView.contentInset
+        DispatchQueue.main.async {
+            self.tableView.setContentOffset(.init(x: 0, y:  -self.tableView.adjustedContentInset.top), animated: false)
+        }
         
-        let selectedRange = textview?.selectedRange
-        textview?.scrollRangeToVisible(selectedRange!)
-        
-       
     }
     
-    @objc func keyboardWillHide(noti: Notification){
-        self.view.frame.origin.y = 0
-    }
-
     
     @IBAction func editButton(_ sender: UIBarButtonItem) {
         
@@ -132,7 +130,7 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
         switch title {
         case "Edit":
             sender.title = "Save"
-
+            
             textfieldCell.iseditable()
             textviewCell.iseditable()
         case "Save":
@@ -145,7 +143,6 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
             let detailText = textviewCell.detailTextview?.text ?? ""
             
             save(title: titleText, detail: detailText)
-//            listvc?.list.first?.title = titleText
             listvc?.tableView.reloadData()
         default:
             fatalError()
@@ -161,7 +158,7 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
             
         }
     }
-
+    
     
     /*
      // Override to support conditional editing of the table view.
