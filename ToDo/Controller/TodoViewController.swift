@@ -257,7 +257,8 @@ extension TodoViewController: UITableViewDelegate {
             todoTitle = atodo.title!
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailTableViewController") as! DetailTableViewController
-            vc.todoTitle = todoTitle
+            vc.todo = atodo
+            vc.listvc = self
             self.navigationController?.pushViewController(vc, animated: true)
         
             

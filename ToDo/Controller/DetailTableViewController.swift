@@ -8,16 +8,17 @@
 
 import UIKit
 
-class DetailTableViewController: UITableViewController {
+class DetailTableViewController: UITableViewController, UITextViewDelegate{
     
-    var category: Category?
+    var todo : ToDo?
     var coredata = CoreData()
-    var todoTitle = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.separatorStyle = .none
+        tableView.estimatedRowHeight = 60
+        tableView.rowHeight = UITableView.automaticDimension
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -29,6 +30,8 @@ class DetailTableViewController: UITableViewController {
         registerNib(nibname: "DetailCell")
     }
     
+    weak var listvc: TodoViewController?
+
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -55,17 +58,33 @@ class DetailTableViewController: UITableViewController {
         return 45
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if indexPath.section == 1 {
+            return UITableView.automaticDimension
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
     
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! DetailTableViewCell
-    let detailcell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! DetailTableViewCell
         
         if indexPath.section == 0 {
-            cell.titleTextfield?.text = todoTitle
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! DetailTableViewCell
+            cell.titleTextfield?.text = todo?.title
              return cell
+            
         } else {
-            detailcell.detailTextview?.text = "12345567788 \n 123445667898"
+            let detailcell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! DetailTableViewCell
+            detailcell.detailTextview?.text = todo?.detail
+            detailcell.detailTextview?.delegate = self
             return detailcell
         }
 
@@ -94,22 +113,21 @@ class DetailTableViewController: UITableViewController {
             let detailText = textviewCell.detailTextview?.text ?? ""
             
             save(title: titleText, detail: detailText)
-            
+//            listvc?.list.first?.title = titleText
+            listvc?.tableView.reloadData()
         default:
             fatalError()
         }
-        
-        
-    
     }
     
     func save(title: String, detail: String) {
         
-        
-        
-        
-        
-        
+        if let todo = todo {
+            todo.title = title
+            todo.detail = detail
+            try! coredata.save()
+            
+        }
     }
 
     
