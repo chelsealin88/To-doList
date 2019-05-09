@@ -39,7 +39,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         //change attribute name
         coredata.list.forEach{
             $0.renameAttribute(before: "enter", after: "title")
-            
         }
         
       
@@ -164,8 +163,8 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         let frame = getkeyboardheigh.cgRectValue
         let height = frame.height
         
-        view.frame.origin.y = -height
         /// todo: keyboard heigh
+        view.frame.origin.y = -height
     }
     
     @objc func keyboardWillHide(noti: Notification) {

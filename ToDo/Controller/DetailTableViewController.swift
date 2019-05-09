@@ -10,6 +10,7 @@ import UIKit
 
 class DetailTableViewController: UITableViewController, UITextViewDelegate{
     
+    let center : NotificationCenter = NotificationCenter.default
     var todo : ToDo?
     var coredata = CoreData()
     
@@ -20,14 +21,17 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
         tableView.estimatedRowHeight = 60
         tableView.rowHeight = UITableView.automaticDimension
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
         registerNib(nibname: "TitleCell")
         registerNib(nibname: "DetailCell")
+        
+        //Listion to Keyboard
+//        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+//        deinit {
+//
+//        }
     }
     
     weak var listvc: TodoViewController?
@@ -85,12 +89,40 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
             let detailcell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! DetailTableViewCell
             detailcell.detailTextview?.text = todo?.detail
             detailcell.detailTextview?.delegate = self
+            self.textview = detailcell.detailTextview
             return detailcell
         }
 
      // Configure the cell...
      
      }
+    
+    var textview : UITextView?
+    
+    //Setting keyboard
+    @objc func keyboardWillChange(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            tableView.contentInset = .zero
+        } else {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+        
+        tableView.scrollIndicatorInsets = tableView.contentInset
+        
+        let selectedRange = textview?.selectedRange
+        textview?.scrollRangeToVisible(selectedRange!)
+        
+       
+    }
+    
+    @objc func keyboardWillHide(noti: Notification){
+        self.view.frame.origin.y = 0
+    }
+
     
     @IBAction func editButton(_ sender: UIBarButtonItem) {
         
