@@ -114,7 +114,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Detail" id="pT7-E6-7J5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="eYG-81-Rze">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="eYG-81-Rze">
                             <color key="tintColor" red="0.22658842800000001" green="0.51790297029999999" blue="0.74120926860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
                                 <action selector="editButton:" destination="ijo-Vl-clq" id="Av6-FL-1tu"/>
@@ -125,39 +125,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vGQ-Am-nKX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2392.8000000000002" y="1460.8374384236454"/>
-        </scene>
-        <!--Edit-->
-        <scene sceneID="bdP-eU-adh">
-            <objects>
-                <tableViewController storyboardIdentifier="EditDetailTableViewController" id="9Kv-Xz-aUe" customClass="EditDetailTableViewController" customModule="ToDo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hhz-Wb-SkY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Bdq-Eh-0Ys">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bdq-Eh-0Ys" id="Wpf-m9-QUj">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="9Kv-Xz-aUe" id="P0b-0m-wem"/>
-                            <outlet property="delegate" destination="9Kv-Xz-aUe" id="Uk8-u8-Neu"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Edit" id="eUp-rW-bKz">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="kKz-ib-hmy">
-                            <color key="tintColor" red="0.22658842800000001" green="0.51790297029999999" blue="0.74120926860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CY1-jH-nf6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4532" y="1461"/>
         </scene>
         <!--TO DO-->
         <scene sceneID="DQ5-hD-f0Q">
@@ -250,24 +217,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xK4-lk-pOf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1450" y="1461"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Ey6-a0-ANl">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nYp-GV-Lz6" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pn4-SS-sTQ">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9Kv-Xz-aUe" kind="relationship" relationship="rootViewController" id="AMu-3k-5Fe"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mag-Ii-GOY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3590" y="1461"/>
         </scene>
     </scenes>
 </document>

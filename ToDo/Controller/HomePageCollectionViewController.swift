@@ -58,7 +58,6 @@ class HomePageCollectionViewController: UICollectionViewController {
         case "Save":
             // edit -> complete 結束觀察
             sender.title = "Edit"
-            break
         default:
             fatalError()
         }

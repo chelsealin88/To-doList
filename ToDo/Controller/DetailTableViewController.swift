@@ -11,6 +11,7 @@ import UIKit
 class DetailTableViewController: UITableViewController {
     
     var category: Category?
+    var coredata = CoreData()
     var todoTitle = String()
     
     override func viewDidLoad() {
@@ -61,10 +62,10 @@ class DetailTableViewController: UITableViewController {
     let detailcell = tableView.dequeueReusableCell(withIdentifier: "DetailCell", for: indexPath) as! DetailTableViewCell
         
         if indexPath.section == 0 {
-            cell.titleTextfield.text = todoTitle
+            cell.titleTextfield?.text = todoTitle
              return cell
         } else {
-            detailcell.detailTextview.text = "12345567788 \n 123445667898"
+            detailcell.detailTextview?.text = "12345567788 \n 123445667898"
             return detailcell
         }
 
@@ -72,9 +73,43 @@ class DetailTableViewController: UITableViewController {
      
      }
     
-    @IBAction func editButton(_ sender: Any) {
+    @IBAction func editButton(_ sender: UIBarButtonItem) {
         
-       
+        guard let title = sender.title else { return }
+        let textfieldCell = tableView.cellForRow(at: .init(row: 0, section: 0)) as! DetailTableViewCell
+        let textviewCell = tableView.cellForRow(at: .init(row: 0, section: 1)) as! DetailTableViewCell
+        switch title {
+        case "Edit":
+            sender.title = "Save"
+
+            textfieldCell.iseditable()
+            textviewCell.iseditable()
+        case "Save":
+            sender.title = "Edit"
+            
+            textfieldCell.finishEdit()
+            textviewCell.finishEdit()
+            
+            let titleText = textfieldCell.titleTextfield?.text ?? ""
+            let detailText = textviewCell.detailTextview?.text ?? ""
+            
+            save(title: titleText, detail: detailText)
+            
+        default:
+            fatalError()
+        }
+        
+        
+    
+    }
+    
+    func save(title: String, detail: String) {
+        
+        
+        
+        
+        
+        
     }
 
     
@@ -129,3 +164,5 @@ class DetailTableViewController: UITableViewController {
     }
     
 }
+
+
