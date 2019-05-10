@@ -37,9 +37,9 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         addtextField.layer.cornerRadius = addtextField.frame.height / 2
         addtextField.clipsToBounds = true
         //change attribute name
-        coredata.list.forEach{
-            $0.renameAttribute(before: "enter", after: "title")
-        }
+//        coredata.list.forEach{
+//            $0.renameAttribute(before: "enter", after: "title")
+//        }
         
       
 
@@ -218,7 +218,8 @@ extension TodoViewController: UITableViewDelegate {
             let doneAction = UIContextualAction(style: .normal, title: "Done", handler: { (action, view, completion) in
                 
                 /// todo : category.todolist
-                self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
+                self.category?.todolist[indexPath.row].setValue(!atodo.done, forKey: "done")
+//                self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 
@@ -232,7 +233,8 @@ extension TodoViewController: UITableViewDelegate {
             
             let undoAction = UIContextualAction(style: .normal, title: "Undo", handler: { (action, view, completion) in
                 
-                self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
+                self.category?.todolist[indexPath.row].setValue(!atodo.done, forKey: "done")
+//                self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 

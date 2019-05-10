@@ -15,7 +15,7 @@ import UIKit.NSAttributedString
 class CoreData {
     
 //    var list : [NSManagedObject] = []
-    var list : [ToDo] = []
+//    var list : [ToDo] = []
     var categoryList : [Category] = []
     
     var appDelegate: AppDelegate {
@@ -27,23 +27,23 @@ class CoreData {
     
     
     // save list Dat
-    func saveData(title: String) {
-        
-        let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
-        let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
-        let todo = managedObject as! ToDo
-        todo.title = title
-        todo.done = false
-//        todo.id = Int64(list.count)
-        
-        do {
-            try managedContext.save()
-            list.append(todo)
-        } catch let error as NSError {
-            fatalError("\(error)")
-        }
-        
-    }
+//    func saveData(title: String) {
+//
+//        let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
+//        let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
+//        let todo = managedObject as! ToDo
+//        todo.title = title
+//        todo.done = false
+////        todo.id = Int64(list.count)
+//
+//        do {
+//            try managedContext.save()
+////            list.append(todo)
+//        } catch let error as NSError {
+//            fatalError("\(error)")
+//        }
+//
+//    }
     
     func save()throws{
            try managedContext.save()
@@ -99,7 +99,7 @@ class CoreData {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "ToDo")
         
         do {
-            list = try managedContext.fetch(fetchRequest) as! [ToDo]
+//            list = try managedContext.fetch(fetchRequest) as! [ToDo]
         } catch let error as NSError {
             fatalError("Error:\(error)")
         }
