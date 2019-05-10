@@ -217,6 +217,7 @@ extension TodoViewController: UITableViewDelegate {
             
             let doneAction = UIContextualAction(style: .normal, title: "Done", handler: { (action, view, completion) in
                 
+                /// todo : category.todolist
                 self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
