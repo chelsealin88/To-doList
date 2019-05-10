@@ -44,21 +44,28 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
       
 
         //Listion to keyboard
-        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillHide(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         
         addtextField.delegate = self
         list = category?.todolist ?? []
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = true
+        tableView.addGestureRecognizer(tapGesture)
+    
     }
+    
+    @objc func hideKeyboard() {
+        addtextField.resignFirstResponder()
+    }
+
     
     // Stop to listen keyboard notification
     deinit {
-        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillChange(noti:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
+        center.removeObserver(self)
     }
     
     
@@ -157,12 +164,13 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     }
 
     //Setting keyboard
-    @objc func keyboardWillChange(noti: Notification) {
-        print("keyboard will change \(noti.name.rawValue)")
-        guard let getkeyboardheigh = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { fatalError() }
-        let frame = getkeyboardheigh.cgRectValue
-        let height = frame.height
+    @objc func keyboardWillChange(notification: Notification) {
+        print("keyboard will change \(notification.name.rawValue)")
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { fatalError() }
         
+        let frame = keyboardValue.cgRectValue
+        let height = frame.height
+
         /// todo: keyboard heigh
         view.frame.origin.y = -height
     }
@@ -219,7 +227,7 @@ extension TodoViewController: UITableViewDelegate {
                 
                 /// todo : category.todolist
                 self.category?.todolist[indexPath.row].setValue(!atodo.done, forKey: "done")
-//                self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
+
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 
@@ -234,7 +242,7 @@ extension TodoViewController: UITableViewDelegate {
             let undoAction = UIContextualAction(style: .normal, title: "Undo", handler: { (action, view, completion) in
                 
                 self.category?.todolist[indexPath.row].setValue(!atodo.done, forKey: "done")
-//                self.coredata.list[indexPath.row].setValue(!atodo.done, forKey: "done")
+
                 try! self.coredata.appDelegate.persistentContainer.viewContext.save()
                 cell?.textLabel?.attributedText = atodo.title!.strikeThrough(bool: !needAttribute)
                 

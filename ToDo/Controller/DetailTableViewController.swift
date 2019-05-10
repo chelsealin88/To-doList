@@ -31,12 +31,8 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
     }
     
     //Stop to listion keyboard
-    /// todo: remove observer
     deinit {
-        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        center.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
+        center.removeObserver(self)
     }
     
     weak var listvc: TodoViewController?
