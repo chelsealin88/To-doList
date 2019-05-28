@@ -15,6 +15,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addTodoButton: UIButton!
     @IBOutlet weak var addtextField: UITextField!
     
+    
     let center : NotificationCenter = NotificationCenter.default
     var coredata = CoreData()
     var tasknumber = Int()
@@ -58,9 +59,7 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     
     }
     
-    @objc func hideKeyboard() {
-        addtextField.resignFirstResponder()
-    }
+    
 
     
     // Stop to listen keyboard notification
@@ -73,12 +72,8 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     // get data from your persistent store
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        getData()
-        
         setupBarItem()
-
     //        print(coredata.getTodoFor(categoryName: category?.name ?? "😃"))
-        
     }
 
     
@@ -153,6 +148,10 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    //Gesture
+    @objc func hideKeyboard() {
+        addtextField.resignFirstResponder()
+    }
     
     func setupButton() {
         addTodoButton.layer.cornerRadius = addTodoButton.frame.size.width / 2
@@ -161,18 +160,34 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
         addTodoButton.layer.shadowOpacity = 1.0
         addTodoButton.layer.shadowRadius = 0.0
         addTodoButton.layer.masksToBounds = false
-    }
+    }  
 
     //Setting keyboard
     @objc func keyboardWillChange(notification: Notification) {
         print("keyboard will change \(notification.name.rawValue)")
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { fatalError() }
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            fatalError() }
+        var keyboardsize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
         
-        let frame = keyboardValue.cgRectValue
-        let height = frame.height
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            var aCGRect : CGRect = self.view.frame
+            aCGRect.size.height += keyboardsize!.height
+        } else { //鍵盤出來
+//            view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+        }
+        
+        
+        
+        tableView.scrollIndicatorInsets = tableView.contentInset
+       
+
+//        let frame = keyboardValue.cgRectValue
+//        let height = frame.height
 
         /// todo: keyboard heigh
-        view.frame.origin.y = -height
+//        view.frame.origin.y = -height
     }
     
     @objc func keyboardWillHide(noti: Notification) {
@@ -304,7 +319,6 @@ extension TodoViewController: UITableViewDelegate {
                 alert.addAction(cancleAction)
                 alert.addAction(deletetAction)
                 self.present(alert, animated: true, completion: nil)
-                
             }
             
         }
@@ -312,8 +326,6 @@ extension TodoViewController: UITableViewDelegate {
         deleteAction.backgroundColor = .init(red: 121/235, green: 121/235, blue: 130/235, alpha: 1)
         editAction.backgroundColor = UIColor(red: 232, green: 116, blue: 118)
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-        
-        
     }
     
 }

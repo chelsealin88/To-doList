@@ -103,7 +103,7 @@ class DetailTableViewController: UITableViewController, UITextViewDelegate{
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-        
+         
         if notification.name == UIResponder.keyboardWillHideNotification {
             tableView.contentInset = .zero
         } else {

@@ -24,17 +24,17 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8t-w7-1rA">
                                 <rect key="frame" x="10" y="128.5" width="62.5" height="21.5"/>
                                 <fontDescription key="fontDescription" name="ArialHebrew-Bold" family="Arial Hebrew" pointSize="20"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Y5-9t-nT9">
                                 <rect key="frame" x="145" y="-10" width="25" height="64"/>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="45"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8Y5-9t-nT9" secondAttribute="trailing" constant="10" id="Ikf-Co-Pqj"/>
                             <constraint firstAttribute="bottom" secondItem="S8t-w7-1rA" secondAttribute="bottom" constant="30" id="ZVG-nN-Z5w"/>
@@ -48,7 +48,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="mAI-fk-OaB" secondAttribute="trailing" id="0Ad-yA-rBH"/>
-                <constraint firstItem="mAI-fk-OaB" firstAttribute="height" secondItem="UOj-ae-jxb" secondAttribute="height" multiplier="180:200" id="P7G-lS-OW3"/>
+                <constraint firstItem="mAI-fk-OaB" firstAttribute="leading" secondItem="UOj-ae-jxb" secondAttribute="leading" constant="20" id="Vof-Ri-wGl"/>
                 <constraint firstAttribute="bottom" secondItem="mAI-fk-OaB" secondAttribute="bottom" id="pa9-0X-eG0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="gTF-g3-THR"/>

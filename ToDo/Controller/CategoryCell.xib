@@ -67,9 +67,9 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="KGq-fE-h9t" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="180:200" id="3py-sm-hxD"/>
                 <constraint firstItem="KHZ-hT-bRH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="Evh-yi-iMT"/>
                 <constraint firstAttribute="bottom" secondItem="KGq-fE-h9t" secondAttribute="bottom" id="R7C-gE-K7Z"/>
+                <constraint firstItem="KGq-fE-h9t" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="UpJ-DD-2Ss"/>
                 <constraint firstAttribute="trailing" secondItem="KGq-fE-h9t" secondAttribute="trailing" id="jNv-Ly-Yqk"/>
                 <constraint firstItem="KHZ-hT-bRH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="n8G-ne-2fp"/>
             </constraints>
