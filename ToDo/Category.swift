@@ -9,13 +9,7 @@
 import Foundation
 import UIKit
 
-//struct Acategory {
-//    
-//    var name: String
+
+//struct CreateTask {
 //    
 //}
-
-
-struct CreateTask {
-    
-}

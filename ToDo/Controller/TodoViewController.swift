@@ -60,8 +60,6 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-
-    
     // Stop to listen keyboard notification
     deinit {
         center.removeObserver(self)
@@ -96,14 +94,13 @@ class TodoViewController: UIViewController, UITextFieldDelegate {
     // Get Cora Data
     func getData() {
         coredata.getData {
-            ///todo gcd
+            //todo gcd
             tableView.reloadData()
         }
     }
     
     // Save Core Data
     func save(title: String) {
-        
         guard let todos = category?.categoryCount else { return }
         let todo = coredata.makeTodo(title: title)
         let lastone = category?.todolist.first?.id ?? -1
@@ -272,7 +269,7 @@ extension TodoViewController: UITableViewDelegate {
     }
     
     
-    // Delete
+    // Delete & Edit
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in

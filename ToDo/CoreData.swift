@@ -84,7 +84,6 @@ class CoreData {
 
     //Make Todo
     func makeTodo(title:String) -> ToDo {
-        
         let entity = NSEntityDescription.entity(forEntityName: "ToDo", in: managedContext)!
         let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
         let todo = managedObject as! ToDo
